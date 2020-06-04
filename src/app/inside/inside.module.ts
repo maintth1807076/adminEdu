@@ -15,9 +15,10 @@ import {DetailCourseComponent} from './course/detail/detail.component';
 import {CreateEditLessonComponent} from './lesson/create-edit/create-edit.component';
 import {CreateEditTeacherComponent} from './teacher/create-edit/create-edit.component';
 import {DetailLessonComponent} from './lesson/detail/detail.component';
+import { TeacherComponent } from './teacher/teacher.component';
 
 @NgModule({
-  declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent],
+  declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent],
   imports: [
     CommonModule,
     InsideRoutingModule,

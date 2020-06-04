@@ -1,0 +1,67 @@
+<div class="tables-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div [routerLink]="['/teacher/create-edit']">
+          <button>Tạo</button>
+        </div>
+        <div class="accordion table-data">
+          <div class="card rounded-0">
+            <div class="mb-2" style=" display: flex;
+                            align-items: center;">
+              <div class="mr-4">
+                <span>Tìm kiếm: </span>
+              </div>
+              <input style="padding: 5px; border: 1px solid; border-radius: 10px;" placeholder="search"
+                     type="text" value="" (input)="search($event.target.value)" class="bg-0 b-0">
+            </div>
+            <div class="card-header">
+              <h4 class="mb-0" data-toggle="collapse" data-target="#table-two" aria-expanded="true"
+                  aria-controls="table-two">
+                Danh sách
+                <i class="fa pull-right accordion__angle--animated" aria-hidden="true"></i>
+              </h4>
+            </div>
+            <div id="table-two" class="collapse show table-responsive">
+              <table class="table mb-4">
+                <thead>
+                <tr>
+                  <th scope="col"><div style="width: 100px;">Thời gian</div></th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Ảnh đại diện</th>
+                  <th scope="col">Thông tin chi tiết</th>
+                  <th scope="col">Nơi công tác</th>
+                  <th scope="col">Chứng chỉ</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody *ngIf="teachers.length == 0">
+                <tr class="noTransaction text-center ng-hide" ng-show="userTrans.length<1">
+                  <td colspan="6">
+                    <h5 class="mt-3 mb-2 font-weight-bold ng-binding">Không có dữ liệu!</h5>
+                  </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr *ngFor="let item of teachers | paginate: { itemsPerPage: 1, currentPage: p, id: id  }">
+                  <td class="last-trade"><span>{{item.createdAt | date:'yyyy-MM-dd HH:mm:ss':'VI'}}</span></td>
+                  <td><span>{{item.name}}</span></td>
+                  <td><img src={{item.avatar}} width="100" alt="loading"></td>
+                  <td><span>{{item.description}}</span></td>
+                  <td><span>{{item.workAt}}</span></td>
+                  <td><span>{{item.certificate}}</span></td>
+                  <td><span [routerLink]="['/teacher',item.id]">Detail</span> | <span [routerLink]="['/teacher/create-edit']" [queryParams]="{id: item.id}">Edit</span> | <span (click)="deleted(item.id)">Delete</span></td>
+                </tr>
+                </tbody>
+              </table>
+              <pagination-controls maxSize="5" *ngIf="teachers.length > 1"
+                                   style="text-align: right" [id]="id" (pageChange)="p = $event">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
