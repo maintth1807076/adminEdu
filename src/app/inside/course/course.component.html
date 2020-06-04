@@ -1,1 +1,135 @@
-<p>course works!</p>
+<div class="tables-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div [routerLink]="['/course/create-edit']"
+                    [queryParams]="{id: 'none', name: nameDoc, idCategories: idDoc}">
+                    <button>Tạo</button>
+                </div>
+                <div class="accordion table-data">
+                    <div class="card rounded-0">
+                        <div class="mb-2" style=" display: flex;
+                            align-items: center;">
+                            <div class="mr-4">
+                                <span>Tìm kiếm: </span>
+                            </div>
+                            <input style="padding: 5px; border: 1px solid; border-radius: 10px;" placeholder="search"
+                                type="text" value="" (input)="search($event.target.value)" class="bg-0 b-0">
+                        </div>
+                        <div class="card-header">
+                            <h4 class="mb-0" data-toggle="collapse" data-target="#table-two" aria-expanded="true"
+                                aria-controls="table-two">
+                                Danh sách
+                                <i class="fa pull-right accordion__angle--animated" aria-hidden="true"></i>
+                            </h4>
+                        </div>
+                        <div id="table-two" class="collapse show table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <!-- <th scope="col">Id</th> -->
+                                        <!-- <th scope="col">Species</th> -->
+                                        <th scope="col">
+                                            <div style="width: 100px;">Thời gian</div>
+                                        </th>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col">Danh mục</th>
+                                        <th scope="col">Coaching service</th>
+                                        <th scope="col">course level</th>
+                                        <th scope="col">description</th>
+                                        <th scope="col">discount</th>
+                                        <th scope="col">discount code</th>
+                                        <th scope="col"> estimated time</th>
+                                        <th scope="col">follow up request accept</th>
+                                        <th scope="col">follow up request max</th>
+                                        <th scope="col">price</th>
+                                        <th scope="col">teacher</th>
+                                        <th scope="col">updatedAt</th>
+                                        <th scope="col">video introduce</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="listDataCategories.length == 0">
+                                    <tr class="noTransaction text-center ng-hide" ng-show="userTrans.length<1">
+                                        <td colspan="6">
+                                            <h5 class="mt-3 mb-2 font-weight-bold ng-binding">Không có dữ liệu!</h5>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of listDataCategories | paginate: { itemsPerPage: 10, currentPage: p, id: id  }">
+                                        <!-- <td>
+                                                            <span class="id">{{item.id}}</span>
+                                                        </td> -->
+                                        <td class="last-trade">
+                                            <span>{{item.createdAt|date:'yyyy-MM-dd HH:mm:ss':'VI'}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{item.name}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.categoryId}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.coachingService}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.courseLevel}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.description}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.discount}}</span>
+                                        </td>
+                                          <td>
+                                            <span>{{item.discountCode}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.estimatedTime}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.followUpRequestAccept}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.followUpRequestMax}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.likedUserIds}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.price}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.teacherIds}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.updatedAt}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.videoIntroducce}}</span>
+                                        </td>
+                                        <!-- <td><img src={{item.urlImg}} width="100" alt="loading"></td> -->
+                                        <td>
+                                            <span [routerLink]="['/course/create-edit']"
+                                                [queryParams]="{id: item.id, name: nameDoc, idCategories: idDoc}">Chỉnh
+                                                sửa</span> | <span [routerLink]="['/bai-hoc']"
+                                                [queryParams]="{courseName: item.name, courseId: item.id, idCategories: idDoc, nameCategories: nameDoc}">Bài
+                                                học</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <pagination-controls maxSize="5" *ngIf="listDataCategories.length > 10"
+                                style="text-align: right" [id]="id" (pageChange)="p = $event">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
