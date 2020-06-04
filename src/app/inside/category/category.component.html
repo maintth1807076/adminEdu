@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
-<!--        <div [routerLink]="['/category/create-edit']" [queryParams]="{id: 'none'}">-->
-<!--          <button>Tạo</button>-->
-<!--        </div>-->
+        <div [routerLink]="['/category/create-edit']">
+          <button>Tạo</button>
+        </div>
         <div class="accordion table-data">
           <div class="card rounded-0">
             <div class="mb-2" style=" display: flex;
@@ -26,13 +26,12 @@
               <table class="table mb-4">
                 <thead>
                 <tr>
-                  <th scope="col">
-                    <div style="width: 100px;">Thời gian</div>
-                  </th>
+                  <th scope="col"><div style="width: 100px;">Thời gian</div></th>
                   <th scope="col">Tên</th>
                   <th scope="col">Mô tả</th>
                   <th scope="col">Ảnh</th>
                   <th scope="col">Video giới thiệu</th>
+                  <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody *ngIf="listDataCategories.length == 0">
@@ -48,8 +47,8 @@
                   <td><span>{{item.name}}</span></td>
                   <td><span>{{item.description}}</span></td>
                   <td><img src={{item.arrImg[0]}} width="100" alt="loading"></td>
-                  <td [routerLink]="['/course']" [queryParams]="{id: item.id, name: item.name}"><span>Khóa học</span></td>
                   <td><span>{{item.videoIntroduce}}</span></td>
+                  <td><span [routerLink]="['/category',item.id]">Detail</span> | <span [routerLink]="['/category/create-edit']" [queryParams]="{id: item.id}">Edit</span> | <span (click)="deleted(item.id)">Delete</span></td>
                 </tr>
                 </tbody>
               </table>

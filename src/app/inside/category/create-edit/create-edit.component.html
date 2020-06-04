@@ -1,1 +1,34 @@
-<p>create-edit works!</p>
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+  <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+    <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+    <div class="toast-message">
+      {{textNotifi}}
+    </div>
+  </div>
+</div>
+<div class="col-lg-5">
+  <div class="card login-card register-card">
+    <div class="card-body">
+      <h2 class="card-title" *ngIf="sttAdd">Tạo danh mục</h2>
+      <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa danh mục</h2>
+      <form [formGroup]="formCreated">
+        <div class="form-group">
+          <input type="text" formControlName="name" class="form-control m-b-30" aria-describedby="emailHelp"
+                 placeholder="Tên danh mục">
+        </div>
+        <div class="form-group">
+          <input type="text" formControlName="arrImg" class="form-control m-b-30"
+                 placeholder="Ảnh đại diện">
+        </div>
+        <div class="form-group">
+          <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Mô tả danh mục">
+        </div>
+        <div class="form-group">
+          <input type="text" formControlName="videoIntroduce" class="form-control m-b-30" placeholder="Video giới thiệu">
+        </div>
+        <button (click)="createdBook()" type="button" class="btn btn-block m-b-30 submit">Lưu
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

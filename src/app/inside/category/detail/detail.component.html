@@ -1,1 +1,57 @@
-<p>detail works!</p>
+<div class="tables-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <button [routerLink]="['/category']">Back</button>
+        </div>
+        <div class="accordion table-data">
+          <h1>Detail khoa hoc</h1>
+          <button [routerLink]="['/category/create-edit']"
+                  [queryParams]="{id: category.id}">Chỉnh sửa danh mục</button>
+          <ul>
+            <li>Tên: {{category.name}}</li>
+            <li>Ngày tạo: {{category.createdAt|date:'yyyy-MM-dd HH:mm:ss':'VI'}}</li>
+            <li>Description: {{(category.description + '').length > 500 ? category.description.substring(0, 500) + '...' : category.description}}</li>
+            <li>Ảnh:
+              <ul>
+                <li *ngFor="let item of category.arrImg">
+                  <img src={{item}} width="100" alt="loading">
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <h2>Danh sách khóa học</h2>
+          <table class="table mb-4">
+            <thead>
+            <tr>
+              <th scope="col">Tên</th>
+              <th scope="col">Ảnh</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="courses.length == 0">
+            <tr class="noTransaction text-center ng-hide" ng-show="userTrans.length<1">
+              <td colspan="6">
+                <h5 class="mt-3 mb-2 font-weight-bold ng-binding">Chưa có khóa học.</h5>
+              </td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr *ngFor="let item of courses | paginate: { itemsPerPage: 1, currentPage: p, id: id  }">
+              <td>
+                <span>{{item.name}}</span>
+              </td>
+              <td><img src={{item.thumbnail}} width="100" alt="loading"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination-controls maxSize="5" *ngIf="courses.length > 10"
+                             style="text-align: right" [id]="id" (pageChange)="p = $event">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+
