@@ -9,9 +9,11 @@ import {takeWhile} from 'rxjs/operators';
 })
 export class CategoryComponent implements OnInit {
 
+  sttNotifi: boolean = false;
+  textNotifi: string;
+  sttTextNotifi: string = 'toast-success';
+  sttLoading: boolean = false;
   open: any;
-  sttLoadingComplete: any;
-  xetduyet: any;
   id: any;
   p: any;
   alive: boolean = true;
@@ -48,4 +50,30 @@ export class CategoryComponent implements OnInit {
     this.listDataCategories = arr
   }
 
+  async deleted(id: string) {
+      var confirmed = confirm('Có xóa danh mục này không?');
+      if(confirmed){
+        var docRef = this.afs.doc('categories/' + id);
+        await  docRef.get().subscribe(async doc => {
+          if(!doc.exists){
+            this.sttLoading = false;
+            this.sttNotifi = true;
+            this.textNotifi = 'Danh mục không tồn tại.';
+            this.sttTextNotifi = 'toast-error';
+          } else {
+            await docRef.update({status: -1}).then(async a => {
+                this.sttLoading = false;
+                this.sttNotifi = true;
+                this.textNotifi = 'Xóa danh mục thành công';
+                this.sttTextNotifi = 'toast-success';
+            }).catch(er => {
+              this.sttLoading = false;
+              this.sttNotifi = true;
+              this.textNotifi = er.msg;
+              this.sttTextNotifi = 'toast-error';
+            })
+          }
+        })
+      }
+  }
 }

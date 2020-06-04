@@ -47,7 +47,7 @@ const routes: Routes = [
         component: CreateEditLessonComponent
       },
       {
-        path: 'category/:id',
+        path: 'lesson/:id',
         component: DetailLessonComponent
       },
     ]
