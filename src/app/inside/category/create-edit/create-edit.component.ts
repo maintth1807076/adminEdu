@@ -27,7 +27,7 @@ export class CreateEditCategoryComponent implements OnInit {
           objCreated['name'] = a.data().name;
           objCreated['arrImg'] = a.data().arrImg[0];
           objCreated['description'] = a.data().description;
-          objCreated['videoIntroduce'] = [a.data().videoIntroduce]
+          objCreated['videoIntroduce'] = a.data().videoIntroduce
           this.formCreated = this.fb.group(objCreated);
           this.sttAdd = false;
         })
@@ -47,78 +47,51 @@ export class CreateEditCategoryComponent implements OnInit {
   }
 
   async createdBook() {
-    console.log(this.formCreated.value)
     this.sttLoading = true;
     this.sttNotifi = false;
-    this.afs.collection('categories').add({
-      createdAt: new Date().getTime(),
-      description: this.formCreated.value.description,
-      id: "",
-      name: this.formCreated.value.name,
-      uidCreate: '',
-      updatedAt: new Date().getTime(),
-      arrImg: [this.formCreated.value.arrImg],
-      videoIntroduce: this.formCreated.value.videoIntroduce,
-    }).then(a => {
-      this.afs.doc('categories/' + a.id).update({
-        id: a.id
+    if (!this.sttAdd) {
+      this.afs.doc('categories/' + this.id).update({
+        name: this.formCreated.value.name,
+        description: this.formCreated.value.description,
+        updatedAt: new Date().getTime(),
+      }).then(a => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = 'Sửa thành công';
+        this.sttTextNotifi = 'toast-success';
+        this.formCreated.reset()
+      }).catch(er => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = er.msg;
+        this.sttTextNotifi = 'toast-error';
       })
-      this.sttLoading = false;
-      this.sttNotifi = true;
-      this.textNotifi = 'Thêm danh mục thành công';
-      this.sttTextNotifi = 'toast-success';
-      this.formCreated.reset()
-    }).catch(er => {
-      this.sttLoading = false;
-      this.sttNotifi = true;
-      this.textNotifi = er.msg;
-      this.sttTextNotifi = 'toast-error';
-    })
-    // if (!this.sttAdd) {
-    //   this.afs.doc('categories/' + this.idDoc).update({
-    //     urlImg: this.formCreated.value.urlImg,
-    //     name: this.formCreated.value.name,
-    //     description: this.formCreated.value.description,
-    //     updatedAt: new Date().getTime(),
-    //   }).then(a => {
-    //     this.sttLoading = false;
-    //     this.sttNotifi = true;
-    //     this.textNotifi = 'Sửa thành công';
-    //     this.sttTextNotifi = 'toast-success';
-    //     this.formCreated.reset()
-    //   }).catch(er => {
-    //     console.log(er);
-    //     this.sttLoading = false;
-    //     this.sttNotifi = true;
-    //     this.textNotifi = er.msg;
-    //     this.sttTextNotifi = 'toast-error';
-    //   })
-    // } else {
-    //   this.afs.collection('categories').add({
-    //     createdAt: new Date().getTime(),
-    //     description: this.formCreated.value.description,
-    //     id: "",
-    //     name: this.formCreated.value.name,
-    //     uidCreate: '',
-    //     updatedAt: new Date().getTime(),
-    //     arrImg: this.formCreated.value.urlImg,
-    //     videoIntroduce: this.formCreated.value.videoIntroduce,
-    //   }).then(a => {
-    //     this.afs.doc('categories/' + a.id).update({
-    //       id: a.id
-    //     })
-    //     this.sttLoading = false;
-    //     this.sttNotifi = true;
-    //     this.textNotifi = 'Thêm danh mục thành công';
-    //     this.sttTextNotifi = 'toast-success';
-    //     this.formCreated.reset()
-    //   }).catch(er => {
-    //     this.sttLoading = false;
-    //     this.sttNotifi = true;
-    //     this.textNotifi = er.msg;
-    //     this.sttTextNotifi = 'toast-error';
-    //   })
-    // }
+    } else {
+      this.afs.collection('categories').add({
+        createdAt: new Date().getTime(),
+        description: this.formCreated.value.description,
+        id: "",
+        name: this.formCreated.value.name,
+        uidCreate: '',
+        updatedAt: new Date().getTime(),
+        arrImg: [this.formCreated.value.arrImg],
+        videoIntroduce: this.formCreated.value.videoIntroduce,
+      }).then(a => {
+        this.afs.doc('categories/' + a.id).update({
+          id: a.id
+        })
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = 'Thêm danh mục thành công';
+        this.sttTextNotifi = 'toast-success';
+        this.formCreated.reset()
+      }).catch(er => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = er.msg;
+        this.sttTextNotifi = 'toast-error';
+      })
+    }
   }
 
   getParameterByName(name, url) {

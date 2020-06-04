@@ -9,6 +9,8 @@ import {DetailCourseComponent} from './course/detail/detail.component';
 import {LessonComponent} from './lesson/lesson.component';
 import {CreateEditLessonComponent} from './lesson/create-edit/create-edit.component';
 import {DetailLessonComponent} from './lesson/detail/detail.component';
+import {CreateEditTeacherComponent} from './teacher/create-edit/create-edit.component';
+import {TeacherComponent} from './teacher/teacher.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,14 @@ const routes: Routes = [
       {
         path: 'lesson/:id',
         component: DetailLessonComponent
+      },
+      {
+        path: 'teacher',
+        component: TeacherComponent
+      },
+      {
+        path: 'teacher/create-edit',
+        component: CreateEditTeacherComponent
       },
     ]
   }
