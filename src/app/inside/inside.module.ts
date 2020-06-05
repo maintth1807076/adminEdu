@@ -8,7 +8,7 @@ import { CourseComponent } from './course/course.component';
 import { LessonComponent } from './lesson/lesson.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {CreateEditCategoryComponent} from './category/create-edit/create-edit.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DetailCategoryComponent} from './category/detail/detail.component';
 import {CreateEditCourseComponent} from './course/create-edit/create-edit.component';
 import {DetailCourseComponent} from './course/detail/detail.component';
@@ -21,9 +21,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent],
+  exports: [
+    InsideComponent
+  ],
   imports: [
     CommonModule,
     InsideRoutingModule,
@@ -32,6 +37,9 @@ import {MatInputModule} from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    FormsModule,
   ]
 })
 export class InsideModule { }
