@@ -1,6 +1,25 @@
-<!--<ul>-->
-<!--  <li routerLink="/category">Danh mục</li>-->
-<!--  <li routerLink="/course">Khóa học</li>-->
-<!--  <li routerLink="/lesson">Bài học</li>-->
-<!--</ul>-->
-<router-outlet></router-outlet>
+<!--<mat-drawer-container>-->
+<!--  <mat-drawer mode="side">-->
+<!--    <ul>-->
+<!--      <li routerLink="/category">Danh mục</li>-->
+<!--      <li routerLink="/course">Khóa học</li>-->
+<!--      <li routerLink="/lesson">Bài học</li>-->
+<!--    </ul>-->
+<!--  </mat-drawer>-->
+<!--  <mat-drawer-content>-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </mat-drawer-content>-->
+<!--</mat-drawer-container>-->
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side">
+        <ul>
+          <li routerLink="/category">Danh mục</li>
+          <li routerLink="/course">Khóa học</li>
+          <li routerLink="/lesson">Bài học</li>
+        </ul>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-button (click)="sidenav.toggle()">X</button>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
