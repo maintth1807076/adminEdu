@@ -14,24 +14,24 @@ export class CourseComponent implements OnInit {
   id: any;
   p: any;
   alive: boolean = true;
-  // listCategories: any = [];
+  categories: any = [];
   listDataCategories: any = [];
   permanentListDataCategories: any = [];
   permanentListDataCategories1: any = [];
   idDoc: any;
   nameDoc: string;
-  constructor(public afs: AngularFirestore) { 
+  constructor(public afs: AngularFirestore) {
     var url = window.location.href;
     this.idDoc = this.getParameterByName('id', url);
     this.nameDoc = this.getParameterByName('name', url);
     this.getDataClient();
   }
   getDataClient() {
-    // this.afs.collection('categories').valueChanges()
-    //   .pipe(takeWhile(() => this.alive))
-    //   .subscribe(data => {
-    //     this.listCategories = data;
-    //   })
+    this.afs.collection('categories').valueChanges()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(data => {
+        this.categories = data;
+      })
 
     this.afs.collection('courses', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
       .pipe(takeWhile(() => this.alive))

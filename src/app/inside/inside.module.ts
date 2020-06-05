@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InsideRoutingModule } from './inside-routing.module';
@@ -16,6 +16,11 @@ import {CreateEditLessonComponent} from './lesson/create-edit/create-edit.compon
 import {CreateEditTeacherComponent} from './teacher/create-edit/create-edit.component';
 import {DetailLessonComponent} from './lesson/detail/detail.component';
 import { TeacherComponent } from './teacher/teacher.component';
+import {MatSelectModule} from '@angular/material/select';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent],
@@ -24,6 +29,9 @@ import { TeacherComponent } from './teacher/teacher.component';
     InsideRoutingModule,
     NgxPaginationModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ]
 })
 export class InsideModule { }
