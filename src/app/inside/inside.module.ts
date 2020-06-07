@@ -23,11 +23,18 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+	
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent],
   exports: [
-    InsideComponent
+    InsideComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
   ],
   imports: [
     CommonModule,
@@ -40,6 +47,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSidenavModule,
     MatCheckboxModule,
     FormsModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
   ]
 })
 export class InsideModule { }
