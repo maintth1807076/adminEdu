@@ -5,13 +5,13 @@
   </select>
   <form [formGroup]="formCreated">
     <div class="form-group">
-      <select formControlName="courseId" class="form-control m-b-30">
+      <select formControlName="courseId" class="form-control m-b-30" (change)="filterWeekByCourse($event.target.value)">
         <option [value] = "0" selected disabled>Chọn khóa học</option>
         <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
       </select>
     </div>
     <div class="form-group">
-      <button>Create</button>
+      <button [disabled]="!(formCreated.value.courseId.length > 0)" (click)="createSyllabus()">Create</button>
     </div>
   </form>
 </div>
@@ -20,15 +20,29 @@
   <li>Thêm bài học</li>
   <li>Thêm bài kiểm tra</li>
 </ul>
+<div id="table-two" class="collapse show table-responsive">
+  <ul *ngIf="weeks.length > 0" class="table mb-4">
+    <li *ngFor="let item of weeks" (click)="getDataLesson(item.id)">
+      <span (click)="getDataWeek(item.id); weekModal.setAttribute('style', 'display:block')" [routerLink]="['/syllabus/create-edit']" [queryParams]="{weekId: item.id}">Edit</span> |
+      <span>{{item.id }} Chương {{item.position}}: {{item.description}}</span>
+        <ul>
+          <li *ngFor="let lesson of lessons">
+            <span>Bài {{lesson.position}}: {{lesson.description}}</span>
+          </li>
+        </ul>
+    </li>
+  </ul>
+</div>
 <div #weekModal style="display: none">
-  <form [formGroup]="formCreated">
+  <form [formGroup]="formWeekCreated">
+    <div *ngIf="!sttAdd" class="form-group">
+      Chương <input type="text" formControlName="position" class="form-control m-b-30">
+    </div>
     <div class="form-group">
       <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
     </div>
     <button (click)="createdWeek()" type="button" class="btn btn-block m-b-30 submit">Lưu
     </button>
-    <!--  <button (click)="deleted()" type="button" class="btn btn-block m-0 badge status-error">Xóa-->
-    <!--  </button>-->
   </form>
 </div>
 
