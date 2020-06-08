@@ -1,64 +1,72 @@
 <div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
-    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
-        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
-        <div class="toast-message">
-            {{textNotifi}}
-        </div>
+  <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+    <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+    <div class="toast-message">
+      {{textNotifi}}
     </div>
+  </div>
 </div>
 
 <div class="col-lg-5">
-    <div class="card login-card register-card">
-        <div class="card-body">
-            <h2 class="card-title" *ngIf="sttAdd">Tạo khóa học</h2>
-            <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa khóa học</h2>
-            <form [formGroup]="formCreated">
-              <mat-form-field>
-                <mat-label>Tên khóa học</mat-label>
-                <input matInput type="text" formControlName="name" placeholder="Tên">
-              </mat-form-field>
-              <br>
-              <mat-form-field>
-                <mat-label>Video giới thiệu</mat-label>
-                <input matInput type="text" formControlName="videoIntroduce" placeholder="Video giới thiệu">
-              </mat-form-field>
+  <div class="card login-card register-card">
+    <div class="card-body">
+      <h2 class="card-title" *ngIf="sttAdd">Tạo khóa học</h2>
+      <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa khóa học</h2>
+      <form [formGroup]="formCreated">
+        <mat-form-field>
+          <mat-label>Tên khóa học</mat-label>
+          <input matInput type="text" formControlName="name">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Video giới thiệu</mat-label>
+          <input matInput type="text" formControlName="videoIntroduce">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Nội dung</mat-label>
+          <input matInput type="text" formControlName="description">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Phần trăm giảm giá</mat-label>
+          <input matInput type="text" formControlName="discount">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" formControlName="price">
+          <span matSuffix>.000 VND</span>
+        </mat-form-field>
 
-                <div class="form-group">
-                    <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
-                </div>
-                <div class="form-group">
-                    <input type="text" formControlName="discount" class="form-control m-b-30"
-                        placeholder="phần trăm giảm giá">
-                </div>
-              <mat-form-field>
-                <mat-label>Amount</mat-label>
-                <input matInput type="number" formControlName="price">
-                <span matSuffix>.000 VND</span>
-              </mat-form-field>
-                <div class="form-group">
-                  <select formControlName="categoryId" class="form-control m-b-30">
-                    <option [value] = "0" selected disabled>Chọn danh mục</option>
-                    <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
-                  </select>
-                </div>
-<!--                <div class="form-group">-->
-<!--                  <select formControlName="teacherIds" class="form-control m-b-30" multiple>-->
-<!--                    <option [value] = "0" selected disabled>Chọn giáo viên</option>-->
-<!--                    <option [value]="item.id" *ngFor="let item of teachers">{{item.name}}</option>-->
-<!--                  </select>-->
-<!--                </div>-->
-                <mat-form-field>
-                  <mat-label>Chọn giáo viên</mat-label>
-                  <mat-select formControlName="teacherIds" multiple>
-                    <mat-option *ngFor="let item of teachers" [value]="item.id">{{item.name}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <button (click)="createdBook()" type="button" class="btn btn-block m-b-30 submit">Lưu
-                </button>
-                <button (click)="deleted()" type="button" class="btn btn-block m-0 badge status-error">Xóa
-                </button>
-            </form>
-        </div>
+        <br>
+        <mat-form-field>
+          <mat-label>Chọn danh mục</mat-label>
+          <mat-select>
+            <mat-option [value]="item.id" *ngFor="let item of categories">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!--                <div class="form-group">-->
+        <!--                  <select formControlName="teacherIds" class="form-control m-b-30" multiple>-->
+        <!--                    <option [value] = "0" selected disabled>Chọn giáo viên</option>-->
+        <!--                    <option [value]="item.id" *ngFor="let item of teachers">{{item.name}}</option>-->
+        <!--                  </select>-->
+        <!--                </div>-->
+        <br>
+        <mat-form-field>
+          <mat-label>Chọn giáo viên</mat-label>
+          <mat-select formControlName="teacherIds" multiple>
+            <mat-option *ngFor="let item of teachers" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button (click)="createdBook()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu
+        </button>
+        <button (click)="deleted()" type="button" class="btn btn-danger btn-block m-b-30  status-error">Xóa
+        </button>
+      </form>
     </div>
+  </div>
 </div>
-
