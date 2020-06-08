@@ -13,18 +13,25 @@
             <h2 class="card-title" *ngIf="sttAdd">Tạo sách</h2>
             <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa sách</h2>
             <form [formGroup]="formCreated">
-                <div class="form-group">
-                    <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
-                </div>
-                <div class="form-group">
-                    <input type="number" formControlName="position" class="form-control m-b-30" placeholder="position">
-                </div>
-                <div class="form-group">
-                    <input type="text" formControlName="courseId" class="form-control m-b-30" placeholder="courseId">
-                </div>
-                <button (click)="createdBook()" type="button" class="btn btn-block m-b-30 submit">Lưu
+                <mat-form-field>
+                    <mat-label>Nội dung</mat-label>
+                    <input matInput type="text" formControlName="description" >
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field>
+                    <mat-label>Chương số</mat-label>
+                    <input matInput type="text" formControlName="position">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field>
+                    <mat-label>Id Khóa học</mat-label>
+                    <input matInput type="text" formControlName="courseId">
+                  </mat-form-field>
+                  <br>
+               
+                <button (click)="createdBook()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu
                 </button>
-                <button (click)="deleted()" type="button" class="btn btn-block m-0 badge status-error">Xóa
+                <button (click)="deleted()" type="button" class="btn btn-block btn-danger status-error">Xóa
                 </button>
             </form>
         </div>
