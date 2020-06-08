@@ -31,7 +31,6 @@ export class CategoryComponent implements OnInit {
     this.afs.collection('categories', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
-        console.log(data);
         this.listDataCategories = data;
         this.permanentListDataCategories = data;
       })

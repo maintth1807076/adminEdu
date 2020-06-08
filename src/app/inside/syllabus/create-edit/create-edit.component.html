@@ -1,0 +1,34 @@
+<div>
+  <select class="form-control m-b-30" (change)="filterCourseByCategory($event.target.value)">
+    <option [value] = "0" selected disabled>Chọn danh mục</option>
+    <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
+  </select>
+  <form [formGroup]="formCreated">
+    <div class="form-group">
+      <select formControlName="courseId" class="form-control m-b-30">
+        <option [value] = "0" selected disabled>Chọn khóa học</option>
+        <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button>Create</button>
+    </div>
+  </form>
+</div>
+<ul>
+  <li (click)="weekModal.setAttribute('style', 'display:block')">Thêm chương mới</li>
+  <li>Thêm bài học</li>
+  <li>Thêm bài kiểm tra</li>
+</ul>
+<div #weekModal style="display: none">
+  <form [formGroup]="formCreated">
+    <div class="form-group">
+      <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
+    </div>
+    <button (click)="createdWeek()" type="button" class="btn btn-block m-b-30 submit">Lưu
+    </button>
+    <!--  <button (click)="deleted()" type="button" class="btn btn-block m-0 badge status-error">Xóa-->
+    <!--  </button>-->
+  </form>
+</div>
+
