@@ -11,15 +11,23 @@
 <!--  </mat-drawer-content>-->
 <!--</mat-drawer-container>-->
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side">
-        <ul>
-          <li routerLink="/category">Danh mục</li>
-          <li routerLink="/course">Khóa học</li>
-          <li routerLink="/lesson">Bài học</li>
-        </ul>
+  <mat-sidenav #sidenav mode="side" opened role="navigation" >
+   
+     <mat-nav-list>
+      <a mat-list-item routerLink='/category'>danh mục</a>
+     
+      <a mat-list-item routerLink='/course'>Khóa học</a>
+      <a mat-list-item routerLink='/lesson'>Bài học</a>
+      </mat-nav-list>
+        
+     
+     
+        
   </mat-sidenav>
   <mat-sidenav-content>
     <button mat-button (click)="sidenav.toggle()">X</button>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+

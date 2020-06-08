@@ -1,0 +1,48 @@
+/* mat-sidenav {
+    width: 200px;
+  } */
+  .mat-button{
+      color: white;
+      background-color: #7070d4;
+  }
+  mat-sidenav{
+     
+      background: #1e1e22;
+  }
+  mat-nav-list a{
+      color: white;
+  }
+  mat-sidenav-container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    margin: 2px;
+  }
+
+  
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+    height: 100%;
+}
+mat-sidenav-content{
+    margin: 5px;
+}
+ 
+mat-sidenav {
+    width: 250px;
+}
+ 
+main {
+    padding: 10px;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+ 
+mat-nav-list a:hover, a:active{
+    color: rgb(26, 110, 236);
+}
+ 
