@@ -11,6 +11,7 @@ import {CreateEditLessonComponent} from './lesson/create-edit/create-edit.compon
 import {DetailLessonComponent} from './lesson/detail/detail.component';
 import {CreateEditTeacherComponent} from './teacher/create-edit/create-edit.component';
 import {TeacherComponent} from './teacher/teacher.component';
+import {CreateEditSyllabusComponent} from './syllabus/create-edit/create-edit.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
       {
         path: 'teacher/create-edit',
         component: CreateEditTeacherComponent
+      },
+      {
+        path: 'syllabus/create-edit',
+        component: CreateEditSyllabusComponent
       },
     ]
   }
