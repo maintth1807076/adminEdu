@@ -83,4 +83,46 @@ export class CourseComponent implements OnInit {
     this.listDataCategories = arr
   }
 
+  createRate(id: any) {
+        this.afs.collection('ratings').add({
+          courseId: id,
+          createdAt: new Date().getTime(),
+          comment: "Sau khóa học tôi có thêm nhiều kiến thức. Khóa học thật sự tuyệt vời.",
+          userId: "dangkhanhttty@gmail.com",
+          star: 4
+        })
+  }
+
+  createFaq(id: any) {
+    this.afs.collection('faqs').add({
+      courseId: id,
+      createdAt: new Date().getTime(),
+      question: "Làm sao để đăng kí coaching 1-1?",
+      answer: "Bạn vui lòng gửi request coaching 1-1.",
+      creator: "dangkhanhttty@gmail.com"
+    })
+  }
+
+  createCourse(id: any) {
+      this.afs.doc('courses/' + id).update({
+        level: "Phù hợp với hầu hết tất cả mọi người",
+        benefit: "Với những bạn 21 ngày đầu tích cực điểm danh, nếu ở tuần cuối cùng vẫn còn gặp khó khăn, sẽ được thầy hỗ trợ trong nhóm để làm ví dụ",
+        updatedAt: new Date().getTime(),
+      })
+  }
+
+  createWeek(id: any) {
+    this.afs.collection('weeks').add({
+      courseId: id,
+      createdAt: new Date().getTime(),
+      description: "Văn học và giá trị",
+      position: 1
+      // description: "Giới thiệu chung",
+      // position: 0
+    }).then(a => {
+      this.afs.doc('weeks/' + a.id).update({
+        id: a.id
+      })
+    })
+  }
 }
