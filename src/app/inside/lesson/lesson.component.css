@@ -1,0 +1,117 @@
+
+
+.liabilities{
+    margin-top: 50px;
+}
+.table tbody .id{
+    font-size: 14px;
+}
+.text-xs-right a {
+    color: #9b59b6;
+    cursor: pointer;
+}
+
+
+ /* .card-header h4 {
+    padding: 20px;
+text-align: center
+ } */
+
+.table tbody .change, .table tbody .id, .table tbody .last-trade {
+    color: #141515;
+}
+table th {
+    background: #1f4167;
+    color: #fff;
+}
+
+
+#table-three table{
+    margin-bottom: 1rem !important
+}
+.note{
+    padding: 0 20px 20px
+}
+.currency-card-rounded .card-body.litecoin {
+    background-color: #0a77f5;
+}
+.currency-card-rounded .card-body.ripple {
+    background-color: #2ca07a;
+}
+
+@media (max-width: 500px){
+    .hidden-mb{
+        display: none;
+    }
+}
+.tables-section{
+    margin-top: 30px;
+}
+
+ /* @media (min-width: 768px){#1E9279
+   .card.rounded-0{
+              height: 600px;
+     }
+ } */
+.btn-info {
+    color: #fff;
+    background-color: #1E9279;
+    border-color: #1E9279;
+}
+.font-weight-bold {
+    font-weight: 500 !important;
+}
+.youHave.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.btn.btn-success.m-t-25{
+    width: 100%;
+}
+
+
+
+.badge {
+	color: #fff;
+	padding: 5px 10px;
+	border-radius: 3px;
+	font-size: 10px;
+	margin-left: 0
+}
+.badge.status-error {
+	background: #ff0000 !important;
+}
+.badge.status-not {
+	background: #9c9c9c !important;
+}
+.badge.status-success {
+	background: #28a745 !important;
+}
+.badge.status-pending {
+	background: #c3c3c3 !important;
+}
+.badge.status-primary {
+    background: #5386dc !important;
+    cursor: pointer;
+}
+.badge.status-sendResult {
+    background: #ffc107 !important;
+    cursor: pointer;
+}
+.badge.status-recive {
+    background: #966d5f !important;
+    cursor: pointer;
+}
+
+tr{
+    cursor: pointer;
+}
+
+.infoHome {
+    margin: 0;
+    padding: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
