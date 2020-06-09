@@ -42,6 +42,12 @@ export class CreateEditCourseComponent implements OnInit {
           objCreated['discount'] = [a.data().discount];
           objCreated['categoryId'] = [a.data().categoryId];
           objCreated['teacherIds'] = [a.data().teacherIds];
+          objCreated['introduce'] = [a.data().introduce];
+          objCreated['thumbnail'] = [a.data().thumbnail];
+          objCreated['followUpRequestMax'] = [a.data().followUpRequestMax];
+          objCreated['benefit'] = [a.data().benefit];
+          objCreated['level'] = [a.data().level];
+          objCreated['tag'] = a.data().tag.join(',');
           this.formCreated = this.fb.group(objCreated);
           this.sttAdd = false;
         } else {
@@ -80,6 +86,12 @@ export class CreateEditCourseComponent implements OnInit {
     objCreated['discount'] = [''];
     objCreated['teacherIds'] = [''];
     objCreated['categoryId'] = 0;
+    objCreated['benefit'] = '';
+    objCreated['level'] = '';
+    objCreated['introduce'] = '';
+    objCreated['tag'] = '';
+    objCreated['thumbnail'] = '';
+    objCreated['followUpRequestMax'] = '';
     this.formCreated = this.fb.group(objCreated);
   }
 
@@ -91,6 +103,8 @@ export class CreateEditCourseComponent implements OnInit {
         videoIntroduce: this.formCreated.value.videoIntroduce,
         name: this.formCreated.value.name,
         description: this.formCreated.value.description,
+        introduce: this.formCreated.value.introduce,
+        thumbnail: this.formCreated.value.thumbnail,
         price: this.formCreated.value.price,
         teacherIds: this.formCreated.value.teacherIds,
         discount: Number(this.formCreated.value.discount),
@@ -109,28 +123,36 @@ export class CreateEditCourseComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       });
     } else {
+      if(this.formCreated.value.categoryId == '0'){
+        alert('phải chọn danh mục đã');
+        return;
+      }
       this.afs.collection('courses').add({
         categoryId: this.formCreated.value.categoryId,
         createdAt: new Date().getTime(),
         description: this.formCreated.value.description,
         id: '',
         name: this.formCreated.value.name,
+        introduce: this.formCreated.value.introduce,
+        videoIntroduce: this.formCreated.value.videoIntroduce,
         teacherIds: this.formCreated.value.teacherIds,
-        price: Number(this.formCreated.value.price),
-        discount: Number(this.formCreated.value.discount),
-        coachingService: '',
-        courseLevel: '',
-        discountCode: '',
-        estimatedTime: '',
-        followUpRequestAccept: '',
-        followUpRequestMax: '',
+        followUpRequestMax: this.formCreated.value.followUpRequestMax,
+        price: this.formCreated.value.price,
+        discount: this.formCreated.value.discount,
+        coachingService: true,
+        level: this.formCreated.value.level,
+        benefit: this.formCreated.value.benefit,
+        discountCode: 'ABCD123',
+        followUpRequestAccept: true,
         updatedAt: new Date().getTime(),
         likedUserIds: '',
-        thumbnail: '',
+        thumbnail: this.formCreated.value.thumbnail,
+        tag: this.formCreated.value.tag.split(',')
       }).then(async a => {
         await this.afs.doc('courses/' + a.id).update({
           id: a.id
         });
+        alert('them thanh cong')
         this.sttLoading = false;
         this.sttNotifi = true;
         this.textNotifi = 'Thêm thành công';

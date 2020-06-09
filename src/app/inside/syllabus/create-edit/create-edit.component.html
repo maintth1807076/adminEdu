@@ -5,38 +5,40 @@
   </select>
   <form [formGroup]="formCreated">
     <div class="form-group">
-      <select formControlName="courseId" class="form-control m-b-30" (change)="filterWeekByCourse($event.target.value)">
+      <select formControlName="courseId" class="form-control m-b-30">
         <option [value] = "0" selected disabled>Chọn khóa học</option>
         <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
       </select>
-    </div>
-    <div class="form-group">
-      <button [disabled]="!(formCreated.value.courseId.length > 0)" (click)="createSyllabus()">Create</button>
     </div>
   </form>
 </div>
 <ul>
   <li (click)="weekModal.setAttribute('style', 'display:block')">Thêm chương mới</li>
-  <li>Thêm bài học</li>
+  <li  (click)="lessonModal.setAttribute('style', 'display:block')">Thêm bài học</li>
   <li>Thêm bài kiểm tra</li>
 </ul>
 <div id="table-two" class="collapse show table-responsive">
-  <ul *ngIf="weeks.length > 0" class="table mb-4">
-    <li *ngFor="let item of weeks" (click)="getDataLesson(item.id)">
-      <span (click)="getDataWeek(item.id); weekModal.setAttribute('style', 'display:block')" [routerLink]="['/syllabus/create-edit']" [queryParams]="{weekId: item.id}">Edit</span> |
-      <span>{{item.id }} Chương {{item.position}}: {{item.description}}</span>
-        <ul>
-          <li *ngFor="let lesson of lessons">
-            <span>Bài {{lesson.position}}: {{lesson.description}}</span>
-          </li>
-        </ul>
+  <ul *ngFor="let item of weeks" class="table mb-4">
+    <li>
+      <span (click)="getDataLesson(item.id); ">View lesson</span>
+      <span (click)="getDataWeek(item.id); weekModal.setAttribute('style', 'display:block')">Edit</span> |
+      <span>Chương {{item.position}}: {{item.description}}</span>
+
     </li>
   </ul>
 </div>
+<ul>
+  <li *ngFor="let lesson of lessons">
+    <span>{{lesson.id}} Bài {{lesson.position}}: {{lesson.description}}</span>
+  </li>
+</ul>
 <div #weekModal style="display: none">
   <form [formGroup]="formWeekCreated">
     <div *ngIf="!sttAdd" class="form-group">
       Chương <input type="text" formControlName="position" class="form-control m-b-30">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="name" class="form-control m-b-30" placeholder="Tên chương">
     </div>
     <div class="form-group">
       <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
@@ -45,4 +47,25 @@
     </button>
   </form>
 </div>
-
+<div #lessonModal style="display: none">
+  <form [formGroup]="formLessonCreated">
+    <div *ngIf="!sttAdd" class="form-group">
+      Bài <input type="text" formControlName="position" class="form-control m-b-30">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="name" class="form-control m-b-30" placeholder="Tên bài học">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="link" class="form-control m-b-30" placeholder="Link tài liệu">
+    </div>
+    <div class="form-group">
+      <input type="number" formControlName="estimatedTime" class="form-control m-b-30" placeholder="Thời gian dự định">
+    </div>
+    <button (click)="createdLesson()" type="button" class="btn btn-block m-b-30 submit">Lưu
+    </button>
+  </form>
+</div>
+<!--<button (click)="getDataLesson(1)">Update lesson all</button>-->

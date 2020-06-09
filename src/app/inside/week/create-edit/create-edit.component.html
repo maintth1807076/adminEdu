@@ -1,0 +1,41 @@
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+  <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+    <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+    <div class="toast-message">
+      {{textNotifi}}
+    </div>
+  </div>
+</div>
+<div class="col-lg-5">
+  <div class="card login-card register-card">
+    <div class="card-body">
+      <h2 class="card-title" *ngIf="sttAdd">Tạo chương mới</h2>
+      <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa chương</h2>
+      <form [formGroup]="formCreated">
+        <div *ngIf="!sttAdd" class="form-group">
+          Chương <input type="text" formControlName="position" class="form-control m-b-30">
+        </div>
+        <div class="form-group" *ngIf="weekId == null || weekId.length == 0">
+          <select class="form-control m-b-30" (change)="filterCourseByCategory($event.target.value)">
+            <option [value] = "0" selected disabled>Chọn danh mục</option>
+            <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select formControlName="courseId" class="form-control m-b-30" (change)="getPositionWeek($event.target.value)">
+            <option [value] = "0" selected disabled>Chọn khóa học</option>
+            <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="text" formControlName="name" class="form-control m-b-30" placeholder="Tên chương">
+        </div>
+        <div class="form-group">
+          <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
+        </div>
+        <button (click)="createdWeek()" type="button" class="btn btn-block m-b-30 submit">Lưu
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

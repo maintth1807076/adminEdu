@@ -53,6 +53,8 @@ export class CreateEditCategoryComponent implements OnInit {
       this.afs.doc('categories/' + this.id).update({
         name: this.formCreated.value.name,
         description: this.formCreated.value.description,
+        arrImg: this.formCreated.value.arrImg.split(','),
+        videoIntroduce: this.formCreated.value.videoIntroduce,
         updatedAt: new Date().getTime(),
       }).then(a => {
         this.sttLoading = false;
@@ -74,12 +76,14 @@ export class CreateEditCategoryComponent implements OnInit {
         name: this.formCreated.value.name,
         uidCreate: '',
         updatedAt: new Date().getTime(),
-        arrImg: [this.formCreated.value.arrImg],
+        arrImg: this.formCreated.value.arrImg.split(','),
         videoIntroduce: this.formCreated.value.videoIntroduce,
+        status: 1
       }).then(a => {
         this.afs.doc('categories/' + a.id).update({
           id: a.id
         })
+        alert('thêm thành công');
         this.sttLoading = false;
         this.sttNotifi = true;
         this.textNotifi = 'Thêm danh mục thành công';

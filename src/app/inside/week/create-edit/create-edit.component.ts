@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {takeWhile} from 'rxjs/operators';
 
 @Component({
@@ -12,42 +9,39 @@ import {takeWhile} from 'rxjs/operators';
   templateUrl: './create-edit.component.html',
   styleUrls: ['./create-edit.component.css']
 })
-export class CreateEditLessonComponent implements OnInit {
+export class CreateEditWeekComponent implements OnInit {
 
-  formCreated: FormGroup;
   alive: boolean = true;
+  formCreated: FormGroup;
   sttNotifi: boolean = false;
   textNotifi: string;
   sttTextNotifi: string = 'toast-success';
   sttLoading: boolean = false;
-  lessonId: string;
   sttAdd: boolean = true;
   categories: any = [];
   courses: any = [];
-  weeks: any = [];
+  weekId: string;
   position: number;
 
-  constructor( private _location: Location, private router: Router, public afAuth: AngularFireAuth, private http: HttpClient, private fb: FormBuilder, public afs: AngularFirestore) {
+  constructor(private router: Router, private fb: FormBuilder, public afs: AngularFirestore) {
     this.createForm();
     this.getDataClient();
     var url = window.location.href;
-    this.lessonId = this.getParameterByName('id', url);
-    if (this.lessonId != null && this.lessonId.length > 0) {
-      afs.doc('lessons/' + this.lessonId).get().subscribe(a => {
+    this.weekId = this.getParameterByName('id', url);
+    if(this.weekId != null && this.weekId.length > 0){
+      afs.doc('weeks/' + this.weekId).get().subscribe(a => {
         var objCreated = [];
-        objCreated['description'] = [a.data().description]
-        objCreated['position'] = [a.data().position]
-        objCreated['weekId'] = [a.data().weekId]
-        objCreated['name'] = [a.data().name]
-        objCreated['estimatedTime'] = [a.data().estimatedTime]
-        objCreated['link'] = [a.data().link]
+        objCreated['name'] = a.data().name;
+        objCreated['description'] = a.data().description;
+        objCreated['position'] = a.data().position
+        objCreated['courseId'] = a.data().courseId
         this.formCreated = this.fb.group(objCreated);
         this.sttAdd = false;
       })
     }
-   }
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   getDataClient() {
@@ -61,11 +55,15 @@ export class CreateEditLessonComponent implements OnInit {
       .subscribe(data => {
         this.courses = data;
       })
-    this.afs.collection('weeks').valueChanges()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(data => {
-        this.weeks = data;
-      })
+  }
+
+  createForm() {
+    var objCreated = [];
+    objCreated['name'] = [''];
+    objCreated['description'] = [''];
+    objCreated['position'] = [''];
+    objCreated['courseId'] = ['0'];
+    this.formCreated = this.fb.group(objCreated);
   }
 
   filterCourseByCategory(id: string) {
@@ -76,32 +74,12 @@ export class CreateEditLessonComponent implements OnInit {
       })
   }
 
-  filterWeekByCourse(id: string) {
-    this.afs.collection('weeks', ref => ref.where('courseId', '==', id)).valueChanges()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(data => {
-        this.weeks = data;
-      })
-  }
-
-  createForm() {
-    var objCreated = [];
-    objCreated['name'] = [''];
-    objCreated['link'] = [''];
-    objCreated['description'] = [''];
-    objCreated['estimatedTime'] = [''];
-    objCreated['position'] = [''];
-    objCreated['weekId'] = ['0'];
-    this.formCreated = this.fb.group(objCreated);
-  }
-  async createdLesson() {
+  async createdWeek() {
     this.sttLoading = true;
     this.sttNotifi = false;
     if (!this.sttAdd) {
-      this.afs.doc('lessons/' + this.lessonId).update({
+      this.afs.doc('weeks/' + this.weekId).update({
         name: this.formCreated.value.name,
-        estimatedTime: this.formCreated.value.estimatedTime,
-        link: this.formCreated.value.link,
         description: this.formCreated.value.description,
         updatedAt: new Date().getTime(),
       }).then(a => {
@@ -111,32 +89,29 @@ export class CreateEditLessonComponent implements OnInit {
         this.sttTextNotifi = 'toast-success';
         this.formCreated.reset()
       }).catch(er => {
-        console.log(er);
         this.sttLoading = false;
         this.sttNotifi = true;
         this.textNotifi = er.msg;
         this.sttTextNotifi = 'toast-error';
       })
     } else {
-      if(this.formCreated.value.weekId == '0'){
-        alert('phải chọn chương đã')
+      if(this.formCreated.value.courseId == '0'){
+        alert('phải chọn khóa học đã');
         return;
       }
-      this.afs.collection('lessons').add({
-        weekId: this.formCreated.value.weekId,
+      this.afs.collection('weeks').add({
         name: this.formCreated.value.name,
-        estimatedTime: this.formCreated.value.estimatedTime,
-        link: this.formCreated.value.link,
+        courseId: this.formCreated.value.courseId,
         createdAt: new Date().getTime(),
         description: this.formCreated.value.description,
         id: "",
         updatedAt: new Date().getTime(),
         position: this.position + 1
       }).then(a => {
-        this.afs.doc('lessons/' + a.id).update({
+        this.afs.doc('weeks/' + a.id).update({
           id: a.id
         })
-        alert('them thanh cong')
+        alert('thêm thành công');
         this.sttLoading = false;
         this.sttNotifi = true;
         this.textNotifi = 'Thêm thành công';
@@ -149,6 +124,13 @@ export class CreateEditLessonComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       })
     }
+  }
+  getPositionWeek(id) {
+    this.afs.collection('weeks', ref=>ref.where('courseId', '==', id)).valueChanges()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(data => {
+        this.position = data.length;
+      })
   }
 
   getParameterByName(name, url) {
@@ -164,12 +146,14 @@ export class CreateEditLessonComponent implements OnInit {
   dismissToast() {
     this.sttNotifi = false;
   }
+  u(){
+    this.afs.collection('weeks').valueChanges().pipe().subscribe(a => {
+      a.forEach(value => {
+        if(value['position'] > 5){
+          this.afs.doc('weeks/' + value['id']).delete()
+        }
 
-  getPositionLesson(id) {
-    this.afs.collection('lessons', ref=>ref.where('weekId', '==', id)).valueChanges()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(data => {
-        this.position = data.length;
       })
+    })
   }
 }
