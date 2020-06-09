@@ -28,17 +28,11 @@
                                     <tr>
                                         <!-- <th scope="col">Id</th> -->
                                         <!-- <th scope="col">Species</th> -->
-                                        <th scope="col">
-                                            <div style="width: 100px;">Thời gian</div>
-                                        </th>
+                                        <th scope="col">Thời gian</th>
                                         <th scope="col">Tên</th>
                                         <th scope="col">Danh mục</th>
                                         <th scope="col">Coaching service</th>
-                                        <th scope="col">course level</th>
-                                        <th scope="col">description</th>
-                                        <th scope="col">discount</th>
-                                        <th scope="col">discount code</th>
-                                        <th scope="col"> estimated time</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">follow up request accept</th>
                                         <th scope="col">follow up request max</th>
                                         <th scope="col">price</th>
@@ -64,33 +58,21 @@
 <!--                                                            <button (click)="createCourse(item.id)">{{item.id}}</button>-->
 <!--                                                            <button (click)="createWeek(item.id)">{{item.id}}</button>-->
 <!--                                                        </td>-->
-                                        <td class="last-trade">
-                                            <span>{{item.createdAt|date:'yyyy-MM-dd HH:mm:ss':'VI'}}</span>
-
+                                        <td>
+                                            <span>{{item.createdAt|date:'yyyy-MM-dd':'VI'}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.name}}</span>
+                                            <span>{{item.id}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.categoryId}}</span>
+                                            <span>{{getCategoryName(item.categoryId)}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.coachingService}}</span>
+                                            <span *ngIf="item.coachingService" class=""></span>
+                                            <span *ngIf="!item.coachingService">✘</span>
                                         </td>
                                         <td>
-                                            <span>{{item.courseLevel}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{item.description}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{item.discount}}</span>
-                                        </td>
-                                          <td>
-                                            <span>{{item.discountCode}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{item.estimatedTime}}</span>
+                                            <span>{{item.description.length > 200 ? item.description.substring(0,200) + '...' : item.description}}</span>
                                         </td>
                                         <td>
                                             <span>{{item.followUpRequestAccept}}</span>
@@ -99,13 +81,10 @@
                                             <span>{{item.followUpRequestMax}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.likedUserIds}}</span>
+                                          <span>{{item.price}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.price}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{item.teacherIds}}</span>
+                                            <span *ngFor="let a of item.teacherIds">{{item.a}} </span>
                                         </td>
                                         <td>
                                             <span>{{item.updatedAt}}</span>

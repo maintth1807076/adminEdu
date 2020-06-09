@@ -1,0 +1,70 @@
+<div class="tables-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div [routerLink]="['/week/create-edit']">
+          <button>Tạo</button>
+        </div>
+        <div class="accordion table-data">
+          <div class="card rounded-0">
+            <div class="mb-2" style=" display: flex;
+                            align-items: center;">
+              <div class="mr-4">
+                <span>Tìm kiếm: </span>
+              </div>
+<!--              <input style="padding: 5px; border: 1px solid; border-radius: 10px;" placeholder="search"-->
+<!--                     type="text" value="" (input)="search($event.target.value)" class="bg-0 b-0">-->
+            </div>
+            <div class="col-2">
+              <select class="form-control m-b-30" (change)="filterWeekByCourse($event.target.value)">
+                <option [value] = "0" selected disabled>Chọn khóa học</option>
+                <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="card-header">
+              <h4 class="mb-0" data-toggle="collapse" data-target="#table-two" aria-expanded="true"
+                  aria-controls="table-two">
+                Danh sách
+                <i class="fa pull-right accordion__angle--animated" aria-hidden="true"></i>
+              </h4>
+            </div>
+            <div id="table-two" class="collapse show table-responsive">
+              <table class="table mb-4">
+                <thead>
+                <tr>
+                  <th scope="col">Thời gian</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Mô tả</th>
+                  <th scope="col">Khóa học</th>
+                  <th scope="col">Tuần</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="weeks.length == 0">
+                <tr class="noTransaction text-center ng-hide" ng-show="userTrans.length<1">
+                  <td colspan="6">
+                    <h5 class="mt-3 mb-2 font-weight-bold ng-binding">Không có dữ liệu!</h5>
+                  </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr *ngFor="let item of weeks | paginate: { itemsPerPage: 10, currentPage: p, id: id  }">
+                  <td class="last-trade"><span>{{item.createdAt | date:'yyyy-MM-dd HH:mm:ss':'VI'}}</span></td>
+                  <td><span>{{item.id}}</span></td>
+                  <td><span>{{item.description}}</span></td>
+                  <td><span>{{getCourseName(item.courseId)}}</span></td>
+                  <td><span>{{item.position}}</span></td>
+                  <td><span [routerLink]="['/category',item.id]">Detail</span> | <span [routerLink]="['/week/create-edit']" [queryParams]="{id: item.id}">Edit</span> | <span (click)="deleted(item.id)">Delete</span></td>
+                </tr>
+                </tbody>
+              </table>
+              <pagination-controls maxSize="5" *ngIf="weeks.length > 10"
+                                   style="text-align: right" [id]="id" (pageChange)="p = $event">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

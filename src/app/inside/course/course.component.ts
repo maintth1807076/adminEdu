@@ -125,4 +125,13 @@ export class CourseComponent implements OnInit {
       })
     })
   }
+
+  getCategoryName(id): string {
+    for (let i = 0; i < this.categories.length; i++) {
+      if(this.categories[i].id == id){
+        return this.categories[i].name;
+      }
+    }
+    return 'lỗi';
+  }
 }

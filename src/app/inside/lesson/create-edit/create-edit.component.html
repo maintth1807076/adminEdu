@@ -10,21 +10,43 @@
 <div class="col-lg-5">
     <div class="card login-card register-card">
         <div class="card-body">
-            <h2 class="card-title" *ngIf="sttAdd">Tạo sách</h2>
-            <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa sách</h2>
+            <h2 class="card-title" *ngIf="sttAdd">Tạo bài học</h2>
+            <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa bài học</h2>
             <form [formGroup]="formCreated">
-                <div class="form-group">
-                    <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
+                <div class="form-group" *ngIf="lessonId == null || lessonId.length == 0">
+                  <select class="form-control m-b-30" (change)="filterCourseByCategory($event.target.value)">
+                    <option [value] = "0" selected disabled>Chọn danh mục</option>
+                    <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group" *ngIf="lessonId == null || lessonId.length == 0">
+                  <select class="form-control m-b-30" (change)="filterWeekByCourse($event.target.value)">
+                    <option [value] = "0" selected disabled>Chọn khóa học</option>
+                    <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
+                  </select>
                 </div>
                 <div class="form-group">
-                    <input type="number" formControlName="position" class="form-control m-b-30" placeholder="position">
+                  <select formControlName="weekId" class="form-control m-b-30" (change)="getPositionLesson($event.target.value)">
+                    <option [value] = "0" selected disabled>Chọn tuần học</option>
+                    <option [value]="item.id" *ngFor="let item of weeks">{{item.name}}</option>
+                  </select>
                 </div>
-                <div class="form-group">
-                    <input type="text" formControlName="courseId" class="form-control m-b-30" placeholder="courseId">
-                </div>
-                <button (click)="createdBook()" type="button" class="btn btn-block m-b-30 submit">Lưu
-                </button>
-                <button (click)="deleted()" type="button" class="btn btn-block m-0 badge status-error">Xóa
+              <div *ngIf="!sttAdd" class="form-group">
+                Bài <input type="text" formControlName="position" class="form-control m-b-30">
+              </div>
+              <div class="form-group">
+                <input type="text" formControlName="name" class="form-control m-b-30" placeholder="Tên bài học">
+              </div>
+              <div class="form-group">
+                <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
+              </div>
+              <div class="form-group">
+                <input type="text" formControlName="link" class="form-control m-b-30" placeholder="Link tài liệu">
+              </div>
+              <div class="form-group">
+                <input type="number" formControlName="estimatedTime" class="form-control m-b-30" placeholder="Thời gian dự định">
+              </div>
+                <button (click)="createdLesson()" type="button" class="btn btn-block m-b-30 submit">Lưu
                 </button>
             </form>
         </div>

@@ -8,39 +8,27 @@ import { takeWhile } from 'rxjs/operators';
   styleUrls: ['./lesson.component.css']
 })
 export class LessonComponent implements OnInit {
-  open: any;
-  sttLoadingComplete: any;
-  xetduyet: any;
+
   id: any;
   p: any;
   alive: boolean = true;
-  listDataCourse: any = [];
-  listDataCategories: any = [];
-  permanentListDataCategories: any = [];
-  courseName: string;
-  courseId: string;
-  constructor(public afs: AngularFirestore) { 
-    var url = window.location.href;
-    this.courseName = this.getParameterByName('courseName', url);
-    this.courseId = this.getParameterByName('courseId', url);
+  lessons: any = [];
+  weeks: any = [];
 
+  constructor(public afs: AngularFirestore) {
     this.getDataClient();
   }
 
   getDataClient() {
-    // this.afs.collection('courses').valueChanges()
-    // .pipe(takeWhile(() => this.alive))
-    // .subscribe(data => {
-    //   this.listDataCourse = data;
-    // })
-    // this.dataAgency = this.afs.collection<ItemClient>('ID', ref => ref.where('statusProcessing', '==', 0));
-    this.afs.collection('weeks', ref => ref
-      .orderBy('createdAt', 'desc')).valueChanges()
+    this.afs.collection('lessons').valueChanges()
+    .pipe(takeWhile(() => this.alive))
+    .subscribe(data => {
+      this.lessons = data;
+    })
+    this.afs.collection('weeks').valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
-        console.log(data);
-        this.listDataCategories = data;
-        this.permanentListDataCategories = data;
+        this.weeks = data;
       })
   }
  getParameterByName(name, url) {
@@ -50,23 +38,27 @@ export class LessonComponent implements OnInit {
       results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
-
-    console.log(decodeURIComponent(results[2].replace(/\+/g, ' ')));
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
-  // search(val: any) {
-  //   console.log(val);
-  //   var arr = [];
-  //   var data = this.permanentListDataCategories;
-  //   for (let index = 0; index < data.length; index++) {
-  //     var text = (data[index].name + data[index].price).toLowerCase()
-  //     if (text.indexOf(val.toLowerCase()) != -1) {
-  //       arr.push(data[index])
-  //     }
-  //   }
-  //   this.listDataCategories = arr
-  // }
+
   ngOnInit(): void {
   }
 
+  getWeekName(id): string {
+    for (let i = 0; i < this.weeks.length; i++) {
+      if(this.weeks[i].id == id){
+        return this.weeks[i].name;
+      }
+    }
+    return 'lỗi';
+  }
+
+  filterLessonByWeek(id) {
+    this.afs.collection('lessons', ref => ref.where('weekId', '==', id)).valueChanges()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(data => {
+        this.lessons = data.sort((a, b)=> {
+          return  a['position'] - b['position']});
+      })
+  }
 }

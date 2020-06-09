@@ -26,9 +26,11 @@ import { CreateEditSyllabusComponent } from './syllabus/create-edit/create-edit.
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { WeekComponent } from './week/week.component';
+import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
 
 @NgModule({
-  declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent, SyllabusComponent, CreateEditSyllabusComponent],
+  declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent, SyllabusComponent, CreateEditSyllabusComponent, WeekComponent, CreateEditWeekComponent],
   exports: [
     InsideComponent,
     MatButtonModule,

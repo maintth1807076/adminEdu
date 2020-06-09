@@ -12,6 +12,7 @@ export class CreateEditSyllabusComponent implements OnInit {
   alive: boolean = true;
   formCreated: FormGroup;
   formWeekCreated: FormGroup;
+  formLessonCreated: FormGroup;
   sttNotifi: boolean = false;
   textNotifi: string;
   sttTextNotifi: string = 'toast-success';
@@ -26,11 +27,12 @@ export class CreateEditSyllabusComponent implements OnInit {
   constructor(public afs: AngularFirestore, private fb: FormBuilder) {
     this.createForm();
     this.getDataClient();
-    var url = window.location.href;
-    this.weekId = this.getParameterByName('weekId', url);
-    if(this.weekId != null && this.weekId.length > 0){
-      this.getDataWeek(this.weekId);
-    }
+    // var url = window.location.href;
+    // this.weekId = this.getParameterByName('weekId', url);
+    // console.log(this.weekId)
+    // if(this.weekId != null && this.weekId.length > 0){
+    //   this.getDataWeek(this.weekId);
+    // }
   }
 
   ngOnInit(): void {
@@ -48,9 +50,10 @@ export class CreateEditSyllabusComponent implements OnInit {
       })
   }
   getDataWeek(id) {
+    this.weekId = id;
     this.afs.doc('weeks/' + id).get().subscribe(a => {
-      console.log(a)
       var objCreated = [];
+      objCreated['name'] = a.data().name;
       objCreated['description'] = a.data().description;
       objCreated['position'] = a.data().position
       this.formWeekCreated = this.fb.group(objCreated);
@@ -64,14 +67,6 @@ export class CreateEditSyllabusComponent implements OnInit {
         this.courses = data;
       })
   }
-  filterWeekByCourse(id: string) {
-    this.afs.collection('weeks', ref=>ref.where('courseId', '==', id)).valueChanges()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(data => {
-        this.weeks = data.sort((a, b)=> {
-          return  a['position'] - b['position']});
-      })
-  }
   createSyllabus() {
   }
 
@@ -80,8 +75,17 @@ export class CreateEditSyllabusComponent implements OnInit {
     objCreated['courseId'] = [0];
     this.formCreated = this.fb.group(objCreated);
     var objCreated1 = [];
+    objCreated1['name'] = [''];
     objCreated1['description'] = [''];
+    objCreated1['position'] = [''];
     this.formWeekCreated = this.fb.group(objCreated1);
+    var objCreated2 = [];
+    objCreated2['name'] = [''];
+    objCreated2['link'] = [''];
+    objCreated2['description'] = [''];
+    objCreated2['estimatedTime'] = [''];
+    objCreated2['position'] = [''];
+    this.formLessonCreated = this.fb.group(objCreated2);
   }
 
   async createdWeek() {
@@ -172,7 +176,72 @@ export class CreateEditSyllabusComponent implements OnInit {
     this.afs.collection('lessons', ref => ref.where('weekId', '==', id)).valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
-        this.lessons = data;
+        this.lessons = data.sort((a, b)=> {
+          return  a['position'] - b['position']});
       })
+    // this.afs.collection('lessons').valueChanges().pipe().subscribe(a => {
+    //   a.forEach(value => {
+    //     console.log()
+    //     this.afs.doc('lessons/' + value['id']).update({
+    //       estimatedTime: 3600
+    //     })
+    //   })
+    //
+    // })
+  }
+
+  async createdLesson() {
+    this.sttLoading = true;
+    this.sttNotifi = false;
+    this.sttAdd = true;
+    if (!this.sttAdd) {
+      this.afs.doc('lessons/' + this.weekId).update({
+        description: this.formCreated.value.description,
+        position: this.formCreated.value.position,
+        updatedAt: new Date().getTime(),
+      }).then(a => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = 'Sửa thành công';
+        this.sttTextNotifi = 'toast-success';
+        this.formCreated.reset()
+      }).catch(er => {
+        console.log(er);
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = er.msg;
+        this.sttTextNotifi = 'toast-error';
+      })
+    } else {
+        await this.afs.collection('lessons', ref=>ref.where('weekId', '==', this.weekId)).valueChanges()
+          .pipe(takeWhile(() => this.alive))
+          .subscribe(data => {
+            let position = data.length + 1;
+            this.afs.collection('lessons').add({
+              name: this.formLessonCreated.value.name,
+              estimatedTime: this.formLessonCreated.value.estimatedTime,
+              link: this.formLessonCreated.value.link,
+              createdAt: new Date().getTime(),
+              description: this.formCreated.value.description,
+              id: "",
+              updatedAt: new Date().getTime(),
+              position: position
+            }).then(a => {
+              this.afs.doc('lessons/' + a.id).update({
+                id: a.id
+              })
+              this.sttLoading = false;
+              this.sttNotifi = true;
+              this.textNotifi = 'Thêm thành công';
+              this.sttTextNotifi = 'toast-success';
+              this.formCreated.reset()
+            }).catch(er => {
+              this.sttLoading = false;
+              this.sttNotifi = true;
+              this.textNotifi = er.msg;
+              this.sttTextNotifi = 'toast-error';
+            })
+          })
+    }
   }
 }
