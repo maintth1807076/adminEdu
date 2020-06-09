@@ -13,7 +13,7 @@
             <h2 class="card-title" *ngIf="sttAdd">Tạo bài học</h2>
             <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa bài học</h2>
             <form [formGroup]="formCreated">
-                <div class="form-group" *ngIf="lessonId == null || lessonId.length == 0">
+<div class="form-group" *ngIf="lessonId == null || lessonId.length == 0">
                   <select class="form-control m-b-30" (change)="filterCourseByCategory($event.target.value)">
                     <option [value] = "0" selected disabled>Chọn danh mục</option>
                     <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
