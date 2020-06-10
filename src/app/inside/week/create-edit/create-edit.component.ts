@@ -62,7 +62,7 @@ export class CreateEditWeekComponent implements OnInit {
     objCreated['name'] = [''];
     objCreated['description'] = [''];
     objCreated['position'] = [''];
-    objCreated['courseId'] = ['0'];
+    objCreated['courseId'] = [''];
     this.formCreated = this.fb.group(objCreated);
   }
 
@@ -95,7 +95,7 @@ export class CreateEditWeekComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       })
     } else {
-      if(this.formCreated.value.courseId == '0'){
+      if(this.formCreated.value.courseId.length == 0){
         alert('phải chọn khóa học đã');
         return;
       }
