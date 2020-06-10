@@ -12,21 +12,27 @@
       <h2 class="card-title" *ngIf="sttAdd">Tạo danh mục</h2>
       <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa danh mục</h2>
       <form [formGroup]="formCreated">
-        <div class="form-group">
-          <input type="text" formControlName="name" class="form-control m-b-30" aria-describedby="emailHelp"
-                 placeholder="Tên danh mục">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="arrImg" class="form-control m-b-30"
-                 placeholder="Ảnh đại diện (nhập link ảnh cách nhau bởi dấu phẩy vd a,b,c)">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Mô tả danh mục">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="videoIntroduce" class="form-control m-b-30" placeholder="Video giới thiệu">
-        </div>
-        <button (click)="createdBook()" type="button" class="btn btn-block m-b-30 submit">Lưu</button>
+        <mat-form-field>
+          <mat-label>Tên danh mục</mat-label>
+          <input matInput type="text" formControlName="name" aria-describedby="emailHelp">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Ảnh đại diện (nhập link ảnh cách nhau bởi dấu phẩy vd a,b,c)</mat-label>
+          <input matInput type="text" formControlName="arrImg">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Mô tả danh mục</mat-label>
+          <input matInput type="text" formControlName="description">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Video giới thiệu</mat-label>
+          <input matInput type="text" formControlName="videoIntroduce">
+        </mat-form-field>
+        <br>
+        <button (click)="createdBook()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu</button>
       </form>
     </div>
   </div>
