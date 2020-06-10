@@ -85,7 +85,7 @@ export class CreateEditCourseComponent implements OnInit {
     objCreated['price'] = [''];
     objCreated['discount'] = [''];
     objCreated['teacherIds'] = [''];
-    objCreated['categoryId'] = 0;
+    objCreated['categoryId'] = '';
     objCreated['benefit'] = '';
     objCreated['level'] = '';
     objCreated['introduce'] = '';
