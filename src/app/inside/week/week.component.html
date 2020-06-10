@@ -50,6 +50,7 @@
                 <tr *ngFor="let item of weeks | paginate: { itemsPerPage: 10, currentPage: p, id: id  }">
                   <td class="last-trade"><span>{{item.createdAt | date:'yyyy-MM-dd HH:mm:ss':'VI'}}</span></td>
                   <td><span>{{item.id}}</span></td>
+                  <td><span>{{item.name}}</span></td>
                   <td><span>{{item.description}}</span></td>
                   <td><span>{{getCourseName(item.courseId)}}</span></td>
                   <td><span>{{item.position}}</span></td>

@@ -91,7 +91,7 @@ export class CreateEditLessonComponent implements OnInit {
     objCreated['description'] = [''];
     objCreated['estimatedTime'] = [''];
     objCreated['position'] = [''];
-    objCreated['weekId'] = ['0'];
+    objCreated['weekId'] = [''];
     this.formCreated = this.fb.group(objCreated);
   }
   async createdLesson() {
@@ -118,7 +118,7 @@ export class CreateEditLessonComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       })
     } else {
-      if(this.formCreated.value.weekId == '0'){
+      if(this.formCreated.value.weekId == 0){
         alert('phải chọn chương đã')
         return;
       }

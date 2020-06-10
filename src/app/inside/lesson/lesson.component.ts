@@ -20,7 +20,7 @@ export class LessonComponent implements OnInit {
   }
 
   getDataClient() {
-    this.afs.collection('lessons').valueChanges()
+    this.afs.collection('lessons', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
     .pipe(takeWhile(() => this.alive))
     .subscribe(data => {
       this.lessons = data;

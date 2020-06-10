@@ -62,7 +62,7 @@
                                             <span>{{item.createdAt|date:'yyyy-MM-dd':'VI'}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.id}}</span>
+                                            <span>{{item.name}}</span>
                                         </td>
                                         <td>
                                             <span>{{getCategoryName(item.categoryId)}}</span>
@@ -84,7 +84,7 @@
                                           <span>{{item.price}}</span>
                                         </td>
                                         <td>
-                                            <span *ngFor="let a of item.teacherIds">{{item.a}} </span>
+                                            <span *ngFor="let teacher of item.teacherIds">{{getTeacherName(teacher)}}, </span>
                                         </td>
                                         <td>
                                             <span>{{item.updatedAt}}</span>
