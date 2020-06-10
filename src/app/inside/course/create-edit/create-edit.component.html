@@ -22,50 +22,99 @@
                 <mat-label>Video giới thiệu</mat-label>
                 <input matInput type="text" formControlName="videoIntroduce" placeholder="Video giới thiệu">
               </mat-form-field>
-              <div class="form-group">
+              <mat-form-field>
+                <mat-label>Link ảnh</mat-label>
+                <input matInput type="text" formControlName="thumbnail" >
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>Nội dung chi tiết</mat-label>
+                <input matInput type="text" formControlName="description" >
+              </mat-form-field>
+              <br> 
+               <mat-form-field>
+                <mat-label>Giới thiệu khóa học</mat-label>
+                <input matInput type="text" formControlName="introduce">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>Từ khóa tag. nhập cách nhau bởi dấu phẩy vd: a,b,c</mat-label>
+                <input matInput type="text" formControlName="tag">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>Lợi ích</mat-label>
+                <input matInput type="text" formControlName="benefit">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>Cấp độ khóa học</mat-label>
+                <input matInput type="text" formControlName="level">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>Phần trăm giảm giá</mat-label>
+                <input matInput type="text" formControlName="discount">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>Giới hạn followUp</mat-label>
+                <input matInput type="text" formControlName="followUpRequestMax">
+              </mat-form-field>
+              <br>
+              <!-- <div class="form-group">
                 <input type="text" formControlName="thumbnail" class="form-control m-b-30" placeholder="Link ảnh">
-              </div>
-                <div class="form-group">
+              </div> -->
+                <!-- <div class="form-group">
                     <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung chi tiết">
-                </div>
-              <div class="form-group">
+                </div> -->
+              <!-- <div class="form-group">
                 <input type="text" formControlName="introduce" class="form-control m-b-30" placeholder="Giới thiệu khóa học">
-              </div>
-              <div class="form-group">
+              </div> -->
+              <!-- <div class="form-group">
                 <input type="text" formControlName="tag" class="form-control m-b-30" placeholder="Từ khóa tag. nhập cách nhau bởi dấu phẩy vd: a,b,c">
-              </div>
-              <div class="form-group">
-                <input type="text" formControlName="benefit" class="form-control m-b-30" placeholder="Lợi ích">
-              </div>
-              <div class="form-group">
+              </div> -->
+              <!-- <div class="form-group">
+                <input type="text" formControlName="benefit" class="form-control m-b-30" placeholder="">
+              </div> -->
+              <!-- <div class="form-group">
                 <input type="text" formControlName="level" class="form-control m-b-30" placeholder="Cấp độ khóa học">
-              </div>
-                <div class="form-group">
+              </div> -->
+                <!-- <div class="form-group">
                     <input type="number" formControlName="discount" class="form-control m-b-30"
                         placeholder="Phần trăm giảm giá">
-                </div>
-              <div class="form-group">
+                </div> -->
+              <!-- <div class="form-group">
                     <input type="number" formControlName="followUpRequestMax" class="form-control m-b-30"
                         placeholder="Giới hạn followUp">
-                </div>
+                </div> -->
               <mat-form-field>
                 <mat-label>Price</mat-label>
                 <input matInput type="number" formControlName="price">
                 <span matSuffix>.000 VND</span>
               </mat-form-field>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <select formControlName="categoryId" class="form-control m-b-30">
                     <option [value] = "0" selected disabled>Chọn danh mục</option>
                     <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
                   </select>
-                </div>
+                </div> -->
+                <mat-form-field>
+                  <mat-label>Chọn danh mục</mat-label>
+                  <mat-select>
+                    <mat-option [value]="item.id" *ngFor="let item of categories">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <br>
                 <mat-form-field>
                   <mat-label>Chọn giáo viên</mat-label>
                   <mat-select formControlName="teacherIds" multiple>
                     <mat-option *ngFor="let item of teachers" [value]="item.id">{{item.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <button (click)="createdBook()" type="button" class="btn btn-block m-b-30 submit">Lưu
+                <button (click)="createdBook()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu
                 </button>
             </form>
         </div>
