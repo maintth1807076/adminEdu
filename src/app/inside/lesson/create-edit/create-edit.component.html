@@ -1,54 +1,74 @@
 <div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
-    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
-        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
-        <div class="toast-message">
-            {{textNotifi}}
-        </div>
+  <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+    <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+    <div class="toast-message">
+      {{textNotifi}}
     </div>
+  </div>
 </div>
 
 <div class="col-lg-5">
-    <div class="card login-card register-card">
-        <div class="card-body">
-            <h2 class="card-title" *ngIf="sttAdd">Tạo bài học</h2>
-            <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa bài học</h2>
-            <form [formGroup]="formCreated">
-<div class="form-group" *ngIf="lessonId == null || lessonId.length == 0">
-                  <select class="form-control m-b-30" (change)="filterCourseByCategory($event.target.value)">
-                    <option [value] = "0" selected disabled>Chọn danh mục</option>
-                    <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
-                  </select>
-                </div>
-                <div class="form-group" *ngIf="lessonId == null || lessonId.length == 0">
-                  <select class="form-control m-b-30" (change)="filterWeekByCourse($event.target.value)">
-                    <option [value] = "0" selected disabled>Chọn khóa học</option>
-                    <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <select formControlName="weekId" class="form-control m-b-30" (change)="getPositionLesson($event.target.value)">
-                    <option [value] = "0" selected disabled>Chọn tuần học</option>
-                    <option [value]="item.id" *ngFor="let item of weeks">{{item.name}}</option>
-                  </select>
-                </div>
-              <div *ngIf="!sttAdd" class="form-group">
-                Bài <input type="text" formControlName="position" class="form-control m-b-30">
-              </div>
-              <div class="form-group">
-                <input type="text" formControlName="name" class="form-control m-b-30" placeholder="Tên bài học">
-              </div>
-              <div class="form-group">
-                <input type="text" formControlName="description" class="form-control m-b-30" placeholder="Nội dung">
-              </div>
-              <div class="form-group">
-                <input type="text" formControlName="link" class="form-control m-b-30" placeholder="Link tài liệu">
-              </div>
-              <div class="form-group">
-                <input type="number" formControlName="estimatedTime" class="form-control m-b-30" placeholder="Thời gian dự định">
-              </div>
-                <button (click)="createdLesson()" type="button" class="btn btn-block m-b-30 submit">Lưu
-                </button>
-            </form>
-        </div>
+  <div class="card login-card register-card">
+    <div class="card-body">
+      <h2 class="card-title" *ngIf="sttAdd">Tạo bài học</h2>
+      <h2 class="card-title" *ngIf="!sttAdd">Chỉnh sửa bài học</h2>
+      <form [formGroup]="formCreated">
+
+        <mat-form-field *ngIf="lessonId == null || lessonId.length == 0">
+       
+          <select matNativeControl (change)="filterCourseByCategory($event.target.value)">
+            <option [value]="0" selected disabled>Chọn danh mục</option>
+            <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
+          </select>
+        </mat-form-field>
+        <br>
+        <mat-form-field *ngIf="lessonId == null || lessonId.length == 0">
+
+          <select matNativeControl (change)="filterWeekByCourse($event.target.value)">
+            <option [value]="0" selected disabled>Chọn khóa học</option>
+            <option [value]="item.id" *ngFor="let item of courses">{{item.name}}</option>
+          </select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field>
+
+          <select matNativeControl formControlName="weekId" (change)="getPositionLesson($event.target.value)">
+            <option [value]="0" selected disabled>Chọn tuần học</option>
+            <option [value]="item.id" *ngFor="let item of weeks">{{item.name}}</option>
+          </select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field *ngIf="!sttAdd">
+          <mat-label> Bài </mat-label>
+          <input matInput type="text" formControlName="position">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label> Tên bài học </mat-label>
+          <input matInput type="text" formControlName="name">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label> Nội dung</mat-label>
+          <input matInput type="text" formControlName="description">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label> Link tài liệu</mat-label>
+          <input matInput type="text" formControlName="link">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Thời gian dự định</mat-label>
+          <input matInput type="number" formControlName="estimatedTime">
+        </mat-form-field>
+        <br>
+
+        <button (click)="createdLesson()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu
+        </button>
+      </form>
     </div>
+  </div>
 </div>
