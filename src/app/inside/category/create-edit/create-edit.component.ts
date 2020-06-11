@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {finalize} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-create-edit',
@@ -10,6 +13,8 @@ import {Router} from '@angular/router';
 })
 export class CreateEditCategoryComponent implements OnInit {
 
+  urls: any = [];
+  downloadURL: Observable<string>;
   formCreated: FormGroup;
   sttNotifi: boolean = false;
   textNotifi: string;
@@ -17,7 +22,7 @@ export class CreateEditCategoryComponent implements OnInit {
   sttLoading: boolean = false;
   id: string;
   sttAdd: boolean = true;
-  constructor(private router: Router, private fb: FormBuilder, public afs: AngularFirestore) {
+  constructor(private storage: AngularFireStorage, private router: Router, private fb: FormBuilder, public afs: AngularFirestore) {
     this.createForm();
     var url = window.location.href;
     this.id = this.getParameterByName('id', url);
@@ -25,7 +30,7 @@ export class CreateEditCategoryComponent implements OnInit {
         afs.doc('categories/' + this.id).get().subscribe(a => {
           var objCreated = [];
           objCreated['name'] = a.data().name;
-          objCreated['arrImg'] = a.data().arrImg[0];
+          this.urls = a.data().arrImg;
           objCreated['description'] = a.data().description;
           objCreated['videoIntroduce'] = a.data().videoIntroduce
           this.formCreated = this.fb.group(objCreated);
@@ -53,7 +58,7 @@ export class CreateEditCategoryComponent implements OnInit {
       this.afs.doc('categories/' + this.id).update({
         name: this.formCreated.value.name,
         description: this.formCreated.value.description,
-        arrImg: this.formCreated.value.arrImg.split(','),
+        arrImg: this.urls,
         videoIntroduce: this.formCreated.value.videoIntroduce,
         updatedAt: new Date().getTime(),
       }).then(a => {
@@ -76,7 +81,7 @@ export class CreateEditCategoryComponent implements OnInit {
         name: this.formCreated.value.name,
         uidCreate: '',
         updatedAt: new Date().getTime(),
-        arrImg: this.formCreated.value.arrImg.split(','),
+        arrImg: this.urls,
         videoIntroduce: this.formCreated.value.videoIntroduce,
         status: 1
       }).then(a => {
@@ -110,5 +115,37 @@ export class CreateEditCategoryComponent implements OnInit {
 
   dismissToast() {
     this.sttNotifi = false;
+  }
+
+  onSelect(event) {
+    let files = event.addedFiles
+    for (let i = 0; i < files.length; i++) {
+      this.uploadFile(files[i])
+    }
+  }
+  onRemove(event) {
+    this.urls.splice(this.urls.indexOf(event), 1);
+  }
+  uploadFile(file) {
+    var n = Date.now();
+    const filePath = `RoomsImages/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(`RoomsImages/${n}`, file);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+          this.downloadURL.subscribe(url => {
+            if (url) {
+              this.urls.push(url);
+            }
+          });
+        })
+      )
+      .subscribe(url => {
+        if (url) {
+        }
+      });
   }
 }

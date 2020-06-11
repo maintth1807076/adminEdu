@@ -14,23 +14,25 @@ import {AuthGuard} from './core/auth.guard';
 import {AuthService} from './core/auth.service';
 import {UserService} from './core/user.service';
 import {RouterModule} from '@angular/router';
+import {NgxDropzoneModule} from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        AngularFireAuthModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        NgxDropzoneModule,
+    ],
   providers: [AuthGuard, AuthService, UserService],
   bootstrap: [AppComponent]
 })
