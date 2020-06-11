@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from './core/auth.service';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 
 
 @Component({
@@ -12,14 +15,13 @@ import {AuthService} from './core/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   constructor(public afAuth: AngularFireAuth, private router: Router, public authService: AuthService, public afs: AngularFirestore) {
     if (window.location.pathname == '/privacy-policy') {
       return
     }
     this.afAuth.authState.subscribe(user => {
-      console.log(user);
       if (user != null) {
-        console.log(user.uid);
         window.localStorage.setItem('uid', user.uid)
       } else {
         this.router.navigate(['/login']);
@@ -35,5 +37,6 @@ export class AppComponent {
         console.log("Logout error", error);
       });
   }
+
 }
 

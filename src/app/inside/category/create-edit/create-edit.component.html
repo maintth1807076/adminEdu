@@ -16,10 +16,18 @@
           <mat-label>Tên danh mục</mat-label>
           <input matInput type="text" formControlName="name">
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Link ảnh (nhập link ảnh cách nhau bởi dấu phẩy vd a,b,c)</mat-label>
-          <input matInput type="text" formControlName="arrImg">
-        </mat-form-field>
+        <ngx-dropzone (change)="onSelect($event)">
+          <ngx-dropzone-label>Choose image</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true" (removed)="onRemove(url)">
+            <ngx-dropzone-label>
+              <img width="100%" src="{{url}}" alt="">
+            </ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+        <span *ngFor="let url of urls">
+          <img width="30px" src="{{url}}" alt="">
+        </span>
+        <input [hidden] matInput type="text" formControlName="arrImg">
         <mat-form-field>
           <mat-label>Mô tả danh mục</mat-label>
           <input matInput type="text" formControlName="description">

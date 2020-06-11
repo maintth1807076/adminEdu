@@ -28,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { WeekComponent } from './week/week.component';
 import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
+import {NgxDropzoneModule} from 'ngx-dropzone';
 
 @NgModule({
   declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent, SyllabusComponent, CreateEditSyllabusComponent, WeekComponent, CreateEditWeekComponent],
@@ -37,20 +38,21 @@ import {CreateEditWeekComponent} from './week/create-edit/create-edit.component'
     MatIconModule,
     MatListModule,
   ],
-  imports: [
-    CommonModule,
-    InsideRoutingModule,
-    NgxPaginationModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatCheckboxModule,
-    FormsModule,
-    MatListModule,
-    MatButtonModule,
-    MatIconModule,
-  ]
+    imports: [
+        CommonModule,
+        InsideRoutingModule,
+        NgxPaginationModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatListModule,
+        MatButtonModule,
+        MatIconModule,
+        NgxDropzoneModule,
+    ]
 })
 export class InsideModule { }
