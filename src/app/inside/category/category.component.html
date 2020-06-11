@@ -7,14 +7,6 @@
         </div>
         <div class="accordion table-data">
           <div class="card rounded-0">
-            <div class="mb-2" style=" display: flex;
-                            align-items: center;">
-              <div class="mr-4">
-                <span>Tìm kiếm: </span>
-              </div>
-              <input style="padding: 5px; border: 1px solid; border-radius: 10px;" placeholder="search"
-                     type="text" value="" (input)="search($event.target.value)" class="bg-0 b-0">
-            </div>
             <div class="card-header">
               <h4 class="mb-0" data-toggle="collapse" data-target="#table-two" aria-expanded="true"
                   aria-controls="table-two">
@@ -26,8 +18,10 @@
               <table class="table mb-4">
                 <thead>
                 <tr>
-                  <th scope="col"><div style="width: 100px;">Thời gian</div></th>
-                  <th scope="col">Tên</th>
+                  <th scope="col">
+                    <div style="width: 100px;">Thời gian <i (click)="sortBy($event, 'time')" class="fa fa-arrow-up"></i></div>
+                  </th>
+                  <th scope="col">Tên <i (click)="sortBy($event, 'name')" class="fa fa-arrow-up"></i> </th>
                   <th scope="col">Mô tả</th>
                   <th scope="col">Ảnh</th>
                   <th scope="col">Video giới thiệu</th>
