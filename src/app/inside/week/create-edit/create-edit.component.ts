@@ -111,7 +111,6 @@ export class CreateEditWeekComponent implements OnInit {
         this.afs.doc('weeks/' + a.id).update({
           id: a.id
         })
-        alert('thêm thành công');
         this.sttLoading = false;
         this.sttNotifi = true;
         this.textNotifi = 'Thêm thành công';

@@ -15,13 +15,14 @@ import {finalize} from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  isLogin: boolean = false;
   constructor(public afAuth: AngularFireAuth, private router: Router, public authService: AuthService, public afs: AngularFirestore) {
     if (window.location.pathname == '/privacy-policy') {
       return
     }
     this.afAuth.authState.subscribe(user => {
       if (user != null) {
+        this.isLogin = true;
         window.localStorage.setItem('uid', user.uid)
       } else {
         this.router.navigate(['/login']);
@@ -31,6 +32,7 @@ export class AppComponent {
   logOut() {
     this.authService.doLogout()
       .then((res) => {
+        this.isLogin = false;
         this.afs.firestore.disableNetwork();
         // this.router.navigate(['/login']);
       }, (error) => {
