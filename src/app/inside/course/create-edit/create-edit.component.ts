@@ -123,7 +123,7 @@ export class CreateEditCourseComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       });
     } else {
-      if(this.formCreated.value.categoryId == '0'){
+      if(this.formCreated.value.categoryId.length == 0){
         alert('phải chọn danh mục đã');
         return;
       }

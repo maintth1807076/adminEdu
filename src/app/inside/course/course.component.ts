@@ -8,13 +8,12 @@ import { takeWhile } from 'rxjs/operators';
   styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit {
-  open: any;
-  sttLoadingComplete: any;
-  xetduyet: any;
+
   id: any;
   p: any;
   alive: boolean = true;
   categories: any = [];
+  teachers: any = [];
   listDataCategories: any = [];
   permanentListDataCategories: any = [];
   permanentListDataCategories1: any = [];
@@ -32,7 +31,11 @@ export class CourseComponent implements OnInit {
       .subscribe(data => {
         this.categories = data;
       })
-
+    this.afs.collection('teachers').valueChanges()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(data => {
+        this.teachers = data;
+      })
     this.afs.collection('courses', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
@@ -130,6 +133,15 @@ export class CourseComponent implements OnInit {
     for (let i = 0; i < this.categories.length; i++) {
       if(this.categories[i].id == id){
         return this.categories[i].name;
+      }
+    }
+    return 'lỗi';
+  }
+
+  getTeacherName(id): string {
+    for (let i = 0; i < this.teachers.length; i++) {
+      if(this.teachers[i].id == id){
+        return this.teachers[i].name;
       }
     }
     return 'lỗi';
