@@ -8,8 +8,12 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {InsideModule} from './inside/inside.module';
 import { LoginComponent } from './outside/login/login.component';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AuthGuard} from './core/auth.guard';
+import {AuthService} from './core/auth.service';
+import {UserService} from './core/user.service';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,13 +25,13 @@ import { LoginComponent } from './outside/login/login.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    InsideModule
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

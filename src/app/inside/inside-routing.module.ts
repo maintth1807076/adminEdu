@@ -14,10 +14,12 @@ import {TeacherComponent} from './teacher/teacher.component';
 import {CreateEditSyllabusComponent} from './syllabus/create-edit/create-edit.component';
 import {WeekComponent} from './week/week.component';
 import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
+import {InsideComponent} from './inside.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: InsideComponent,
     children: [
       {
         path: 'category',
