@@ -67,6 +67,7 @@ export class CreateEditCategoryComponent implements OnInit {
         this.textNotifi = 'Sửa thành công';
         this.sttTextNotifi = 'toast-success';
         this.formCreated.reset()
+        this.urls = null;
       }).catch(er => {
         this.sttLoading = false;
         this.sttNotifi = true;
@@ -94,6 +95,7 @@ export class CreateEditCategoryComponent implements OnInit {
         this.textNotifi = 'Thêm danh mục thành công';
         this.sttTextNotifi = 'toast-success';
         this.formCreated.reset()
+        this.urls = null;
       }).catch(er => {
         this.sttLoading = false;
         this.sttNotifi = true;
