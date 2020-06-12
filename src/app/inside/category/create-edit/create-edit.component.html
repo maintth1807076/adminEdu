@@ -6,6 +6,7 @@
     </div>
   </div>
 </div>
+
 <div class="col-lg-5">
   <div class="card login-card register-card">
     <div class="card-body">
@@ -16,18 +17,7 @@
           <mat-label>Tên danh mục</mat-label>
           <input matInput type="text" formControlName="name">
         </mat-form-field>
-        <ngx-dropzone (change)="onSelect($event)">
-          <ngx-dropzone-label>Choose image</ngx-dropzone-label>
-          <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true" (removed)="onRemove(url)">
-            <ngx-dropzone-label>
-              <img width="100%" src="{{url}}" alt="">
-            </ngx-dropzone-label>
-          </ngx-dropzone-preview>
-        </ngx-dropzone>
-        <span *ngFor="let url of urls">
-          <img width="30px" src="{{url}}" alt="">
-        </span>
-        <input [hidden] matInput type="text" formControlName="arrImg">
+
         <mat-form-field>
           <mat-label>Mô tả danh mục</mat-label>
           <input matInput type="text" formControlName="description">
@@ -36,6 +26,59 @@
           <mat-label>Video giới thiệu</mat-label>
           <input matInput type="text" formControlName="videoIntroduce">
         </mat-form-field>
+        <div class="row" style="margin-bottom: 5%;">
+          <div class="col-6">
+            <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true" (removed)="onRemove(url)">
+              <ngx-dropzone-label>
+                <img width="100%" src="{{url}}" alt="">
+              </ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </div>
+
+          <div class="col-6">
+            <!-- Button to Open the Modal -->
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">
+              Chọn ảnh đại diện
+            </button>
+
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+              <div class="modal-dialog  modal-lg">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    <ngx-dropzone (change)="onSelect($event)">
+                      <ngx-dropzone-label>Chọn ảnh đại diện</ngx-dropzone-label>
+                      <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true" (removed)="onRemove(url)">
+                        <ngx-dropzone-label>
+                          <img width="100%" src="{{url}}" alt="">
+                        </ngx-dropzone-label>
+                      </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                    <span *ngFor="let url of urls">
+                      <img width="30px" src="{{url}}" alt="" style="margin:1%;">
+                    </span>
+                    <input [hidden] matInput type="text" formControlName="arrImg">
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Save</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <button (click)="createdBook()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu</button>
       </form>
     </div>
