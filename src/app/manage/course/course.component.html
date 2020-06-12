@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row">
+    <div class="col-2" *ngFor="let item of courses" [routerLink]="['/manage/course/curriculum']" [queryParams]="{courseId: item.id}">
+      <img width="100%" src="{{item.thumbnail}}" alt="">
+      <p>{{item.name}}</p>
+    </div>
+  </div>
+</div>
