@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { ManageRoutingModule } from './manage-routing.module';
 import { ManageComponent } from './manage.component';
+import { CourseComponent } from './course/course.component';
+import { CurriculumComponent } from './curriculum/curriculum.component';
 
 
 @NgModule({
-  declarations: [ManageComponent],
+  declarations: [ManageComponent, CourseComponent, CurriculumComponent],
   imports: [
     CommonModule,
     ManageRoutingModule

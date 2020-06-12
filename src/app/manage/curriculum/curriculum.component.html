@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row" *ngFor="let item of weeks">
+    <div>
+      {{getLesson(item.id)}}
+      <p>Chương {{item.position}}: {{item.name}}</p>
+
+    </div>
+  </div>
+</div>
+<!--<div *ngFor="let lesson of ">-->
+<!--  <p>Bài {{lesson.position}}: {{lesson.name}} {{lesson.id}}</p>-->
+<!--</div>-->
+
