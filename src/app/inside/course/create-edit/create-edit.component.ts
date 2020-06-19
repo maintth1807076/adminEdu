@@ -1,11 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {takeWhile} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { takeWhile, finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+
+enum CourseStatus {
+  FollowUp = 2,
+  Coaching_1_1 = 1
+}
 
 @Component({
   selector: 'app-create-edit',
@@ -14,6 +21,8 @@ import {takeWhile} from 'rxjs/operators';
   animations: []
 })
 export class CreateEditCourseComponent implements OnInit {
+
+
   formCreated: FormGroup;
   sttNotifi: boolean = false;
   textNotifi: string;
@@ -24,8 +33,15 @@ export class CreateEditCourseComponent implements OnInit {
   sttAdd: boolean = true;
   categories: any = [];
   teachers: any = [];
+  downloadURL: Observable<string>;
+  downloadVidURL: Observable<string>;
+  urls: any = [];
+  urlVid: any = [];
+  submitted = false;
 
-  constructor(private _location: Location, private router: Router, public afAuth: AngularFireAuth, private http: HttpClient, private fb: FormBuilder, public afs: AngularFirestore) {
+  ckeditorContent: string;
+
+  constructor(private _location: Location, private router: Router, public afAuth: AngularFireAuth, private http: HttpClient, private fb: FormBuilder, public afs: AngularFirestore, private storage: AngularFireStorage) {
     this.createForm();
     var url = window.location.href;
     this.idCourse = this.getParameterByName('id', url);
@@ -33,7 +49,7 @@ export class CreateEditCourseComponent implements OnInit {
 
     if (this.idCourse != null && this.idCourse.length > 0) {
       afs.doc('courses/' + this.idCourse).get().subscribe(a => {
-        if(a.exists){
+        if (a.exists) {
           var objCreated = [];
           objCreated['name'] = [a.data().name];
           objCreated['description'] = [a.data().description];
@@ -75,27 +91,73 @@ export class CreateEditCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var x = CourseStatus;
+    var options = Object.keys(CourseStatus);
+    this.options = options.slice(options.length / 2);
   }
+  options: string[];
+  myValue: CourseStatus;
+  CourseStatus: typeof CourseStatus = CourseStatus;
+  parseValue(value: string) {
+    this.myValue = CourseStatus[value];
+  }
+
 
   createForm() {
     var objCreated = [];
-    objCreated['name'] = [''];
-    objCreated['description'] = [''];
-    objCreated['videoIntroduce'] = [''];
-    objCreated['price'] = [''];
-    objCreated['discount'] = [''];
-    objCreated['teacherIds'] = [''];
-    objCreated['categoryId'] = '';
-    objCreated['benefit'] = '';
-    objCreated['level'] = '';
-    objCreated['introduce'] = '';
-    objCreated['tag'] = '';
-    objCreated['thumbnail'] = '';
+    objCreated['name'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]);
+    objCreated['description'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]);
+    objCreated['videoIntroduce'] = new FormControl('', [
+      Validators.required
+    ]);
+    objCreated['price'] = new FormControl('', [
+      Validators.required
+    ]);
+    objCreated['discount'] = new FormControl('', [
+      Validators.required
+    ]);
+    objCreated['teacherIds'] = new FormControl('', [
+      Validators.required
+    ]);
+    objCreated['courseStatus'] = new FormControl('', [
+      Validators.required
+    ]);
+    objCreated['categoryId'] = new FormControl('', [
+      Validators.required,
+    ]);
+    objCreated['benefit'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+    ]);
+    objCreated['level'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]);
+    objCreated['introduce'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]);
+    objCreated['tag'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]);
+    objCreated['thumbnail'] = new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]);
     objCreated['followUpRequestMax'] = '';
     this.formCreated = this.fb.group(objCreated);
   }
 
   async createdBook() {
+    // let abc = this.formCreated.value.description
+    // console.log(abc.split('>'))
     this.sttLoading = true;
     this.sttNotifi = false;
     if (!this.sttAdd) {
@@ -107,6 +169,7 @@ export class CreateEditCourseComponent implements OnInit {
         thumbnail: this.formCreated.value.thumbnail,
         price: this.formCreated.value.price,
         teacherIds: this.formCreated.value.teacherIds,
+        courseStatus: this.formCreated.value.courseStatus,
         discount: Number(this.formCreated.value.discount),
         updatedAt: new Date().getTime()
       }).then(a => {
@@ -123,48 +186,60 @@ export class CreateEditCourseComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       });
     } else {
-      if(this.formCreated.value.categoryId.length == 0){
-        alert('phải chọn danh mục đã');
+      if
+        (this.formCreated.value.invalid) {
+        alert("invalid");
         return;
       }
-      this.afs.collection('courses').add({
-        categoryId: this.formCreated.value.categoryId,
-        createdAt: new Date().getTime(),
-        description: this.formCreated.value.description,
-        id: '',
-        name: this.formCreated.value.name,
-        introduce: this.formCreated.value.introduce,
-        videoIntroduce: this.formCreated.value.videoIntroduce,
-        teacherIds: this.formCreated.value.teacherIds,
-        followUpRequestMax: this.formCreated.value.followUpRequestMax,
-        price: this.formCreated.value.price,
-        discount: this.formCreated.value.discount,
-        coachingService: true,
-        level: this.formCreated.value.level,
-        benefit: this.formCreated.value.benefit,
-        discountCode: 'ABCD123',
-        followUpRequestAccept: true,
-        updatedAt: new Date().getTime(),
-        likedUserIds: '',
-        thumbnail: this.formCreated.value.thumbnail,
-        tag: this.formCreated.value.tag.split(',')
-      }).then(async a => {
-        await this.afs.doc('courses/' + a.id).update({
-          id: a.id
-        });
-        alert('them thanh cong')
-        this.sttLoading = false;
-        this.sttNotifi = true;
-        this.textNotifi = 'Thêm thành công';
-        this.sttTextNotifi = 'toast-success';
-        this.formCreated.reset();
-      }).catch(er => {
-        this.sttLoading = false;
-        this.sttNotifi = true;
-        this.textNotifi = er.msg;
-        this.sttTextNotifi = 'toast-error';
+      this.downloadVidURL.subscribe(urlVid => {
+        this.downloadURL.subscribe(url => {
+          this.afs.collection('courses').add({
+            categoryId: this.formCreated.value.categoryId,
+            createdAt: new Date().getTime(),
+            description: this.formCreated.value.description,
+            id: '',
+            name: this.formCreated.value.name,
+            introduce: this.formCreated.value.introduce,
+            videoIntroduce: urlVid,
+            teacherIds: this.formCreated.value.teacherIds,
+            courseStatus: this.formCreated.value.courseStatus,
+            followUpRequestMax: this.formCreated.value.followUpRequestMax,
+            price: this.formCreated.value.price,
+            discount: this.formCreated.value.discount,
+            coachingService: true,
+            level: this.formCreated.value.level,
+            benefit: this.formCreated.value.benefit,
+            discountCode: 'ABCD123',
+            followUpRequestAccept: true,
+            updatedAt: new Date().getTime(),
+            likedUserIds: '',
+            thumbnail: url,
+            tag: this.formCreated.value.tag.split(',')
+          }).then(async a => {
+            await this.afs.doc('courses/' + a.id).update({
+              id: a.id
+            });
+            alert('them thanh cong')
+            this.router.navigate["/course"];
+            this.sttLoading = false;
+            this.sttNotifi = true;
+            this.textNotifi = 'Thêm thành công';
+            this.sttTextNotifi = 'toast-success';
+            this.formCreated.reset();
+            
+          }).catch(er => {
+            this.sttLoading = false;
+            this.sttNotifi = true;
+            this.textNotifi = er.msg;
+            this.sttTextNotifi = 'toast-error';
+          });
+        })
       });
     }
+    // if (this.formCreated.value.categoryId.length == 0) {
+    //   alert('phải chọn danh mục đã');
+    //   return;
+    // }
   }
 
   async deleted() {
@@ -205,6 +280,79 @@ export class CreateEditCourseComponent implements OnInit {
   dismissToast() {
     this.sttNotifi = false;
   }
+
+  onRemove(event) {
+    this.urls.splice(this.urls.indexOf(event), 1);
+  }
+
+  onSelect(event) {
+    let files = event.addedFiles
+    for (let i = 0; i < files.length; i++) {
+      this.uploadFile(files[i])
+    }
+  }
+
+  uploadFile(file) {
+    var n = Date.now();
+    const filePath = `RoomsImages/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+          this.downloadURL.subscribe((url) => {
+            if (url) {
+              this.urls.push(url);
+              console.log("[url]: ", url);
+
+            }
+          });
+        })
+      )
+      .subscribe(url => {
+        if (url) {
+          console.log(url);
+        }
+      });
+  }
+
+  onSelected(event) {
+    let files = event.addedFiles
+    for (let i = 0; i < files.length; i++) {
+      this.uploadVideo(files[i])
+    }
+  }
+
+  uploadVideo(file) {
+    var n = Date.now();
+    const filePath = `RoomsVideos/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadVidURL = fileRef.getDownloadURL();
+          this.downloadVidURL.subscribe((urlVid) => {
+            if (urlVid) {
+              this.urlVid.push(urlVid);
+              console.log("[urlVideo]: ", urlVid);
+
+            }
+          });
+        })
+      )
+      .subscribe(urlVid => {
+        if (urlVid) {
+          console.log(urlVid);
+        }
+      });
+  }
+
+  onRemoveVid(event) {
+    this.urlVid.splice(this.urlVid.indexOf(event), 1);
+  }
+
 }
-
-

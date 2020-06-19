@@ -15,6 +15,7 @@ import {AuthService} from './core/auth.service';
 import {UserService} from './core/user.service';
 import {RouterModule} from '@angular/router';
 import {NgxDropzoneModule} from 'ngx-dropzone';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
         HttpClientModule,
         BrowserAnimationsModule,
         NgxDropzoneModule,
+        CKEditorModule
     ],
   providers: [AuthGuard, AuthService, UserService],
   bootstrap: [AppComponent]

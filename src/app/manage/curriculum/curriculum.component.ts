@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-curriculum',
@@ -22,15 +22,17 @@ export class CurriculumComponent implements OnInit {
 
   getDataClient() {
     this.afs.collection('weeks', ref => ref.where('courseId', '==', this.courseId)).valueChanges().subscribe(data => {
-      this.weeks = data.sort((a, b)=> {
-        return  a['position'] - b['position']});
+      this.weeks = data.sort((a, b) => {
+        return a['position'] - b['position']
+      });
     })
   }
 
   getLesson(id) {
     this.afs.collection('lessons', ref => ref.where('weekId', '==', id)).valueChanges().subscribe(data => {
-      this.lessons = data.sort((a, b)=> {
-        return  a['position'] - b['position']});
+      this.lessons = data.sort((a, b) => {
+        return a['position'] - b['position']
+      });
     })
   }
   getParameterByName(name, url) {
@@ -42,4 +44,5 @@ export class CurriculumComponent implements OnInit {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
+
 }

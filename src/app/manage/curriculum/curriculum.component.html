@@ -1,13 +1,51 @@
 <div class="container">
-  <div class="row" *ngFor="let item of weeks">
-    <div>
-      {{getLesson(item.id)}}
-      <p>Chương {{item.position}}: {{item.name}}</p>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="dropdown menu-curri">
+        <button class="btn btn-circle btn-custom purple-color dropdown-toggle " type="button"
+          data-toggle="dropdown">Thêm
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#"><i class="fa fa-desktop"></i>Bài giảng mới</a></li>
+          <li><a href="#"><i class="fa fa-graduation-cap"></i>Bài Kiểm tra</a></li>
+          <li><button type="button" class=" btn-link" data-toggle="modal" data-target="#myModal"><i class="fa fa-folder-o"></i>Chương
+              mục</button></li>
+        </ul>
+      </div>
+      <div class="row" *ngFor="let item of weeks">
+        <div>
+          {{getLesson(item.id)}}
+          <p>Chương {{item.position}}: {{item.name}}</p>
 
+        </div>
+      </div>
+
+      <div class="modal" id="myModal">
+        <div class="modal-dialog  modal-lg">
+          <div class="modal-content">
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="col-lg-6">
+                <div class="input-title pull-left">
+                  <input type="text" class="form-control "/>
+                </div>
+                <div>
+                  <a class="btn btn-circle green-dark"><i class="fa fa-check"></i></a>
+                </div>
+                
+              </div>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
 </div>
 <!--<div *ngFor="let lesson of ">-->
 <!--  <p>Bài {{lesson.position}}: {{lesson.name}} {{lesson.id}}</p>-->
 <!--</div>-->
-

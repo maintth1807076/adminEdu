@@ -53,7 +53,7 @@
 
                   <!-- Modal body -->
                   <div class="modal-body">
-                    <ngx-dropzone (change)="onSelect($event)" accept="image/*firebase deploy">
+                    <ngx-dropzone (change)="onSelect($event)" >
                       <ngx-dropzone-label>Chọn ảnh đại diện</ngx-dropzone-label>
                       <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true" (removed)="onRemove(url)">
                         <ngx-dropzone-label>
