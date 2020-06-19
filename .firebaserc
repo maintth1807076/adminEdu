@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "edumaster-lt"
+  },
+  "targets": {
+    "edumaster-lt": {
+      "hosting": {
+        "y": [
+          "edumaster-lt"
+        ]
+      }
+    }
   }
 }
