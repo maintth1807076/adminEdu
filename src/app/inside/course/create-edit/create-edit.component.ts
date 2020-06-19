@@ -157,7 +157,7 @@ export class CreateEditCourseComponent implements OnInit {
 
   async createdBook() {
     // let abc = this.formCreated.value.description
-    // console.log(abc.split('>'))
+    console.log(this.htmlSpecialChars(this.formCreated.value.description))
     this.sttLoading = true;
     this.sttNotifi = false;
     if (!this.sttAdd) {
@@ -196,7 +196,7 @@ export class CreateEditCourseComponent implements OnInit {
           this.afs.collection('courses').add({
             categoryId: this.formCreated.value.categoryId,
             createdAt: new Date().getTime(),
-            description: this.formCreated.value.description,
+            description: this.htmlSpecialChars(this.formCreated.value.description),
             id: '',
             name: this.formCreated.value.name,
             introduce: this.formCreated.value.introduce,
@@ -240,6 +240,17 @@ export class CreateEditCourseComponent implements OnInit {
     //   alert('phải chọn danh mục đã');
     //   return;
     // }
+  }
+
+  htmlSpecialChars(str){
+    if(typeof(str) == "string"){
+      str = str.replace(/&/g, "&");
+		str = str.replace(/"/g, '"');
+		str = str.replace(/'/g, "'");
+		str = str.replace(/</g, "<");
+		str = str.replace(/>/g, ">");
+    }
+    return str;
   }
 
   async deleted() {
