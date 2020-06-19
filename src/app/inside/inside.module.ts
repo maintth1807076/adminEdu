@@ -30,8 +30,12 @@ import { WeekComponent } from './week/week.component';
 import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 
+import { CKEditorModule } from 'ng2-ckeditor';
+import { ManageModule } from '../manage/manage.module';
+import { SafePipe } from './course/pipe/safe.pipe';
+
 @NgModule({
-  declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent, SyllabusComponent, CreateEditSyllabusComponent, WeekComponent, CreateEditWeekComponent],
+  declarations: [InsideComponent, CategoryComponent, CourseComponent, LessonComponent, CreateEditCategoryComponent, DetailCategoryComponent, CreateEditCourseComponent, DetailCourseComponent, CreateEditLessonComponent, CreateEditTeacherComponent, DetailLessonComponent, TeacherComponent, SyllabusComponent, CreateEditSyllabusComponent, WeekComponent, CreateEditWeekComponent, SafePipe ],
   exports: [
     InsideComponent,
     MatButtonModule,
@@ -53,6 +57,8 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
         MatButtonModule,
         MatIconModule,
         NgxDropzoneModule,
+        CKEditorModule,
+        ManageModule
     ]
 })
 export class InsideModule { }

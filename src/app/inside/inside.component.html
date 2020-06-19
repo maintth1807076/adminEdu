@@ -31,90 +31,95 @@
 </mat-sidenav-container>
 
  -->
- <!doctype html>
- <html lang="en">
-   <head>
-     <title>Sidebar 07</title>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!doctype html>
+<html lang="en">
 
-     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<head>
+  <title>Sidebar 07</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-     <!-- <link rel="stylesheet" href="./assets/css/style.css">  -->
-   </head>
-   <body>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
-     <div class="wrapper d-flex align-items-stretch">
-       <nav id="sidebar" class="active">
-         <h1><a href="#" class="logo">P.</a></h1>
-         <ul class="list-unstyled components mb-5">
-          <li>
-            <a href="#"><span class="fa fa-user"></span> Người dùng</a>
-          </li>
-           <li class="active">
-             <a routerLink='/category'><span class="fa fa-folder-open">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="./assets/css/style.css">  -->
+</head>
+
+<body>
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="active">
+      <h1><a href="#" class="logo">P.</a></h1>
+      <ul class="list-unstyled components mb-5">
+        <li>
+          <a href="#"><span class="fa fa-user"></span> Người dùng</a>
+        </li>
+        <li class="active">
+          <a routerLink='/category'><span class="fa fa-folder-open">
               <!-- <i class="fas fa-folder-open"></i> -->
-             </span> Danh mục</a>
-           </li>
-           <li>
-               <a routerLink='/course'><span class="fa fa-book"></span> Khóa học</a>
-           </li>
-           <li>
-               <a routerLink='/week'><span class="fa fa-book"></span> Tuần học</a>
-           </li>
-           <li>
-             <a routerLink='/lesson'><span class="fa fa-sticky-note"></span> Bài học</a>
-           </li>
+            </span> Danh mục</a>
+        </li>
+        <li>
+          <a routerLink='/course'><span class="fa fa-book"></span> Khóa học</a>
+        </li>
+        <li>
+          <a routerLink='/week'><span class="fa fa-book"></span> Tuần học</a>
+        </li>
+        <li>
+          <a routerLink='/lesson'><span class="fa fa-sticky-note"></span> Bài học</a>
+        </li>
 
-           <!-- <li>
+        <!-- <li>
              <a href="#"><span class="fa fa-paper-plane"></span> Contacts</a>
            </li> -->
-         </ul>
+      </ul>
 
-         <div class="footer">
-           <!-- <p>
+      <div class="footer">
+        <!-- <p>
              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
            </p> -->
-         </div>
-       </nav>
+      </div>
+    </nav>
 
-         <!-- Page Content  -->
-       <div id="content" class="p-4 p-md-5">
+    <!-- Page Content  -->
+    <div id="content" class="">
 
-         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-           <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
 
-             <button type="button" id="sidebarCollapse" class="btn btn-primary">
-               <i class="fa fa-bars"></i>
-               <span class="sr-only">Toggle Menu</span>
-             </button>
-             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                 <i class="fa fa-bars"></i>
-             </button>
+          <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
 
-             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <ul class="nav navbar-nav ml-auto">
-                 <li class="nav-item active">
-                     <a class="nav-link"routerLink='/category'>Danh mục</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link" routerLink='/course'>Khóa học</a>
-                 </li>
-                 <li class="nav-item">
-                   <a class="nav-link" routerLink='/week'>Tuần học</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link" routerLink='/lesson'>Bài học</a>
-                 </li>
-               </ul>
-             </div>
-           </div>
-         </nav>
-         <router-outlet></router-outlet>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" routerLink='/category'>Danh mục</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink='/course'>Khóa học</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink='/week'>Tuần học</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink='/lesson'>Bài học</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <router-outlet></router-outlet>
 
- </div>
-     </div>
+    </div>
+  </div>
 
-   </body>
- </html>
+</body>
+
+</html>
