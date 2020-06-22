@@ -5,7 +5,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import {takeWhile} from 'rxjs/operators';
+import {takeWhile, finalize} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-create-edit',
@@ -26,8 +28,10 @@ export class CreateEditLessonComponent implements OnInit {
   courses: any = [];
   weeks: any = [];
   position: number;
+  urlVid: any = [];
+  downloadVidURL: Observable<string>;
 
-  constructor( private _location: Location, private router: Router, public afAuth: AngularFireAuth, private http: HttpClient, private fb: FormBuilder, public afs: AngularFirestore) {
+  constructor( private _location: Location, private router: Router, public afAuth: AngularFireAuth, private http: HttpClient, private fb: FormBuilder, public afs: AngularFirestore, private storage: AngularFireStorage) {
     this.createForm();
     this.getDataClient();
     var url = window.location.href;
@@ -92,6 +96,7 @@ export class CreateEditLessonComponent implements OnInit {
     objCreated['estimatedTime'] = [''];
     objCreated['position'] = [''];
     objCreated['weekId'] = [''];
+    objCreated['videoLesson'] = [''];
     this.formCreated = this.fb.group(objCreated);
   }
   async createdLesson() {
@@ -103,6 +108,7 @@ export class CreateEditLessonComponent implements OnInit {
         estimatedTime: this.formCreated.value.estimatedTime,
         link: this.formCreated.value.link,
         description: this.formCreated.value.description,
+        videoLesson: this.formCreated.value.videoLesson,
         updatedAt: new Date().getTime(),
       }).then(a => {
         this.sttLoading = false;
@@ -119,35 +125,39 @@ export class CreateEditLessonComponent implements OnInit {
       })
     } else {
       if(this.formCreated.value.weekId == 0){
-        alert('phải chọn chương đã')
+        alert('Phải chọn chương đã')
         return;
       }
-      this.afs.collection('lessons').add({
-        weekId: this.formCreated.value.weekId,
-        name: this.formCreated.value.name,
-        estimatedTime: this.formCreated.value.estimatedTime,
-        link: this.formCreated.value.link,
-        createdAt: new Date().getTime(),
-        description: this.formCreated.value.description,
-        id: "",
-        updatedAt: new Date().getTime(),
-        position: this.position + 1
-      }).then(a => {
-        this.afs.doc('lessons/' + a.id).update({
-          id: a.id
+      this.downloadVidURL.subscribe(urlVid => {
+        this.afs.collection('lessons').add({
+          weekId: this.formCreated.value.weekId,
+          name: this.formCreated.value.name,
+          estimatedTime: this.formCreated.value.estimatedTime,
+          link: this.formCreated.value.link,
+          videoLesson: urlVid,
+          createdAt: new Date().getTime(),
+          description: this.formCreated.value.description,
+          id: "",
+          updatedAt: new Date().getTime(),
+          position: this.position + 1
+        }).then(a => {
+          this.afs.doc('lessons/' + a.id).update({
+            id: a.id
+          })
+          alert('them thanh cong')
+          this.sttLoading = false;
+          this.sttNotifi = true;
+          this.textNotifi = 'Thêm thành công';
+          this.sttTextNotifi = 'toast-success';
+          this.formCreated.reset()
+        }).catch(er => {
+          this.sttLoading = false;
+          this.sttNotifi = true;
+          this.textNotifi = er.msg;
+          this.sttTextNotifi = 'toast-error';
         })
-        alert('them thanh cong')
-        this.sttLoading = false;
-        this.sttNotifi = true;
-        this.textNotifi = 'Thêm thành công';
-        this.sttTextNotifi = 'toast-success';
-        this.formCreated.reset()
-      }).catch(er => {
-        this.sttLoading = false;
-        this.sttNotifi = true;
-        this.textNotifi = er.msg;
-        this.sttTextNotifi = 'toast-error';
       })
+      
     }
   }
 
@@ -171,5 +181,42 @@ export class CreateEditLessonComponent implements OnInit {
       .subscribe(data => {
         this.position = data.length;
       })
+  }
+
+  onRemoveVid(event) {
+    this.urlVid.splice(this.urlVid.indexOf(event), 1);
+  }
+
+  onSelected(event) {
+    let files = event.addedFiles
+    for (let i = 0; i < files.length; i++) {
+      this.uploadVideo(files[i])
+    }
+  }
+
+  uploadVideo(file) {
+    var n = Date.now();
+    const filePath = `RoomsVideos/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadVidURL = fileRef.getDownloadURL();
+          this.downloadVidURL.subscribe((urlVid) => {
+            if (urlVid) {
+              this.urlVid.push(urlVid);
+              console.log("[urlVideo]: ", urlVid);
+
+            }
+          });
+        })
+      )
+      .subscribe(urlVid => {
+        if (urlVid) {
+          console.log(urlVid);
+        }
+      });
   }
 }

@@ -7,7 +7,8 @@
   </div>
 </div>
 
-<div class="col-lg-5">
+<div class="col-lg-3"></div>
+<div class="col-lg-6" style="text-align: center;">
   <div class="card login-card register-card">
     <div class="card-body">
       <h2 class="card-title" *ngIf="sttAdd">Tạo bài học</h2>
@@ -54,12 +55,60 @@
           <mat-label> Link tài liệu</mat-label>
           <input matInput type="text" formControlName="link">
         </mat-form-field>
+
+        <div class="row" style="margin-bottom: 5%;">
+
+          <div class="upload-vid col-md-12">
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModalVid">
+              Thêm video
+            </button>
+          </div>
+          <div class="col-md-12">
+            <ngx-dropzone-preview *ngFor="let urlVid of urlVid" [removable]="true" (removed)="onRemoveVid(urlVid)">
+              <ngx-dropzone-label>
+                <iframe accept="video/mp4" [src]="urlVid | safe" frameborder="0"></iframe>
+              </ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </div>
+
+          <div class="modal" id="myModalVid">
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                  <ngx-dropzone (change)="onSelected($event)">
+
+                    <ngx-dropzone-label>Tải lên</ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let urlVid of urlVid" [removable]="true"
+                      (removed)="onRemoveVid(urlVid)">
+
+                      <iframe accept="video/mp4" [src]="urlVid | safe" frameborder="0"></iframe>
+
+                    </ngx-dropzone-preview>
+                  </ngx-dropzone>
+                  <input [hidden] matInput type="text" formControlName="videoLesson">
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Save</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
         <mat-form-field>
           <mat-label>Thời gian dự định</mat-label>
           <input matInput type="number" formControlName="estimatedTime">
         </mat-form-field>
-        <button (click)="createdLesson()" type="button" class="btn btn-primary btn-block m-b-30 submit">Lưu</button>
+        <button (click)="createdLesson()" type="button" class="btn btn-success m-30 submit">Lưu</button>
       </form>
     </div>
   </div>
 </div>
+<div class="col-lg-3"></div>

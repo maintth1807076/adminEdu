@@ -2,9 +2,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div [routerLink]="['/lesson/create-edit']">
+                <div class="menu-course">
+                    <a [routerLink]="['/lesson/create-edit']" class="btn btn-circle btn-custom purple-color">Thêm bài học</a>
+                  </div>
+                <!-- <div [routerLink]="['/lesson/create-edit']">
                     <button>Tạo</button>
-                </div>
+                </div> -->
                 <div class="accordion table-data">
                     <div class="card rounded-0">
                         <!-- <div class="mb-2" style=" display: flex;
@@ -54,7 +57,7 @@
                                             <span>{{item.createdAt|date:'yyyy-MM-dd':'VI'}}</span>
                                         </td>
                                         <td>
-                                            <span>{{item.id}}</span>
+                                            <span>{{item.name}}</span>
                                         </td>
                                         <td>
                                             <span>{{item.description}}</span>

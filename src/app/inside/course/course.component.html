@@ -95,7 +95,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <span>{{item.updatedAt}}</span>
+                                            <span>{{item.updatedAt|date:'yyyy-MM-dd':'VI'}}</span>
                                         </td>
                                         <td>
                                             <iframe width="200" height="130" [src]="item.videoIntroduce | safe"
@@ -130,7 +130,9 @@
                                                 ng-right-click="showContextMenu(course)">
 
                                                 <div class="course-avatar"
-                                                    style="background-image: url('https://cdn.hachium.com/dev/users/46d509938b208d2515e6866b5069c305/1588042849990.jpeg'); background-size: cover;">
+                                                    style="
+                                                     background-size: cover;">
+                                                    <img src="{{item.thumbnail}}" alt="">
                                                 </div>
                                                 <div class="course-info">
                                                     <div class="course-name">

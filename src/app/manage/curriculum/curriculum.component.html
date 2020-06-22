@@ -1,36 +1,122 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <!-- <div class="menu-course" *ngFor="let item of listDataCategories ">
-        <a [routerLink]="['/course/create-edit']" [queryParams]="{id: item.id, name: nameDoc, idCategories: idDoc}" class="btn btn-circle btn-custom purple-color">Thông tin khóa
+
+      <div class="info-course col-sm-11">
+        <a [routerLink]="['/course/create-edit']" [queryParams]="{id: courseId, name: nameDoc, idCategories: idDoc}"
+          class="btn btn-circle btn-custom purple-color">Thông tin khóa
           học</a>
-      </div> -->
-      <div class="dropdown menu-curri">
+      </div>
+      <div class="dropdown menu-curri col-sm-1">
         <button class="btn btn-circle btn-custom purple-color dropdown-toggle " type="button"
           data-toggle="dropdown">Thêm
           <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#"><i class="fa fa-desktop"></i>Bài giảng mới</a></li>
-          <li><a href="#"><i class="fa fa-graduation-cap"></i>Bài Kiểm tra</a></li>
-          <li><button type="button" class=" btn-link" data-toggle="modal" data-target="#myModal"><i
+          <li><a [routerLink]="['/lesson/create-edit']"><i class="fa fa-desktop"></i>Bài giảng mới</a></li>
+          <li><a href="#"><i class="fa fa-graduation-cap"></i>Bài kiểm tra</a></li>
+          <li><a [routerLink]="['/week/create-edit']"><i class="fa fa-folder-o"></i>Chương mục</a></li>
+          <!-- <li><button type="button" class=" btn-link" data-toggle="modal" data-target="#myModal"><i
                 class="fa fa-folder-o"></i>Chương
-              mục</button></li>
+              mục</button></li> -->
         </ul>
       </div>
 
-      <div class="row" *ngFor="let item of weeks">
+      <!-- <div class="row" *ngFor="let item of weeks">
         <div>
           {{getLesson(item.id)}}
           <p>Chương {{item.position}}: {{item.name}}</p>
+          <div *ngFor="let lecture of lessons">
+            <p>Bài {{lecture.position}}: {{lecture.name}} </p>
+          </div>
+        </div>
+      </div> -->
 
+      <div *ngFor="let item of weeks" class="sections col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="section portlet light">
+          <ul class="lectures">
+            <div  class="lecture sec-title">
+              <div class="lec-ele col-xs-6 col-sm-7 col-md-8 col-lg-8">
+                <div class="lec-ic pull-left" style="margin-top: 20px">
+                  <i class="fa fa-bars section-sort-handle ui-sortable-handle" ></i>
+                </div>
+                <div class="lec-name pull-left">
+                  <div ng-hide="section.editing" class="">
+                    <span>{{getLesson(item.id)}}
+                      <p>Chương {{item.position}}: {{item.name}}</p>
+                    </span>
+                  </div>
+                  <!-- <div ng-show="section.editing" class="ng-hide">
+                                <div class="input-title pull-left buttons">
+                                    <input value="Chương {{item.position}}" placeholder="Tiêu đề chương mục" type="text" class="editing-section-title form-control pull-left">
+                                </div>
+                                <div class="buttons">
+                                    <a ng-click="submitEditSectionTitle(section)" class="btn btn-circle btn-icon-only green-dark">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                    <a ng-click="closeEditSectionTitle(section)" class="btn btn-circle btn-icon-only default">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div> -->
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="lec-ele col-xs-6 col-sm-5 col-md-4 col-lg-4 pull-right">
+                <!-- <div class="lec-btn-slide"  ng-if="section.lectures.length > 0" >
+                            <i class="fa fa-chevron-down" tooltip-placement="bottom" uib-tooltip="Thu gọn" tooltip-append-to-body="true"></i>
+                        </div>
+                        <div class="lec-btn-slide">
+                            <i tooltip-placement="bottom" uib-tooltip="Xóa chương mục đã chọn" class="fa fa-trash-o" ng-click="deleteSection(section)" aria-hidden="true" tooltip-append-to-body="true"></i>
+                        </div>
+                        <div class="lec-btn-slide">
+                            <i tooltip-placement="bottom" uib-tooltip="Sao chép sang khóa khác" ng-click="copySectionCourse(section)" class="fa fa-clipboard" aria-hidden="true" tooltip-append-to-body="true"></i>
+                        </div>
+                        <div class="lec-btn-slide">
+                            <i tooltip-placement="bottom" uib-tooltip="Di chuyển sang khóa khác" class="fa fa-arrow-circle-right" ng-click="moveSectionCourse(section)" aria-hidden="true" tooltip-append-to-body="true"></i>
+                        </div>
+                        <div class="lec-btn-slide">
+                            <i class="fa fa-clock-o" ng-click="openModalScheduleSection(section)" aria-hidden="true" tooltip-placement="bottom" uib-tooltip="Đặt lịch" tooltip-append-to-body="true"></i>
+                        </div> -->
+              </div>
+            </div>
+            <div ui-sortable="lectureSortableOptions" class="ng-pristine ng-untouched ng-valid ui-sortable">
+              <li  *ngFor="let lecture of lessons" class="lecture"
+                
+                style="border-top: 1px solid rgb(222, 222, 222);">
+                <div class="lec-ele col-xs-6 col-sm-7 col-md-8 col-lg-8">
+
+                  <div class="lec-name pull-left ">
+                    <div >
+                      <span class="lec-title-display">Bài {{lecture.position}}: {{lecture.name}} </span>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="lec-ele col-xs-6 col-sm-5 col-md-4 col-lg-4 pull-right">
+                  <div class="lec-ic pull-right ">
+                    <i class="fa fa-check-square toggle-on" uib-tooltip="Xuất bản" 
+                      ></i>
+                  </div>
+
+                  <div class="lec-ic pull-right ">
+                    <i uib-tooltip="Sửa bài giảng" 
+                      class="fa fa-edit" aria-hidden="true" ></i>
+                  </div>
+                  <div class="lec-ic pull-right ">
+                    <i uib-tooltip="Xóa bài giảng đã chọn"
+                      class="fa fa-trash-o" aria-hidden="true" ></i>
+                  </div>
+                  
+                </div>
+            </div>
+          </ul>
         </div>
       </div>
 
-      <div class="modal" id="myModal">
+      <!-- <div class="modal" id="myModal">
         <div class="modal-dialog  modal-lg">
           <div class="modal-content">
 
-            <!-- Modal body -->
             <div class="modal-body">
               <div class="col-lg-6">
                 <div class="input-title pull-left">
@@ -47,7 +133,7 @@
 
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
