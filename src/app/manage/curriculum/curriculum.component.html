@@ -41,56 +41,30 @@
                 </div>
                 <div class="lec-name pull-left">
                   <div ng-hide="section.editing" class="">
-                    <span>{{getLesson(item.id)}}
+                    <span>
+                      {{getLesson(item.id)}}
                       <p>Chương {{item.position}}: {{item.name}}</p>
                     </span>
                   </div>
-                  <!-- <div ng-show="section.editing" class="ng-hide">
-                                <div class="input-title pull-left buttons">
-                                    <input value="Chương {{item.position}}" placeholder="Tiêu đề chương mục" type="text" class="editing-section-title form-control pull-left">
-                                </div>
-                                <div class="buttons">
-                                    <a ng-click="submitEditSectionTitle(section)" class="btn btn-circle btn-icon-only green-dark">
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                    <a ng-click="closeEditSectionTitle(section)" class="btn btn-circle btn-icon-only default">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div> -->
+                  
                 </div>
                 <div class="clearfix"></div>
               </div>
               <div class="lec-ele col-xs-6 col-sm-5 col-md-4 col-lg-4 pull-right">
-                <!-- <div class="lec-btn-slide"  ng-if="section.lectures.length > 0" >
-                            <i class="fa fa-chevron-down" tooltip-placement="bottom" uib-tooltip="Thu gọn" tooltip-append-to-body="true"></i>
-                        </div>
-                        <div class="lec-btn-slide">
-                            <i tooltip-placement="bottom" uib-tooltip="Xóa chương mục đã chọn" class="fa fa-trash-o" ng-click="deleteSection(section)" aria-hidden="true" tooltip-append-to-body="true"></i>
-                        </div>
-                        <div class="lec-btn-slide">
-                            <i tooltip-placement="bottom" uib-tooltip="Sao chép sang khóa khác" ng-click="copySectionCourse(section)" class="fa fa-clipboard" aria-hidden="true" tooltip-append-to-body="true"></i>
-                        </div>
-                        <div class="lec-btn-slide">
-                            <i tooltip-placement="bottom" uib-tooltip="Di chuyển sang khóa khác" class="fa fa-arrow-circle-right" ng-click="moveSectionCourse(section)" aria-hidden="true" tooltip-append-to-body="true"></i>
-                        </div>
-                        <div class="lec-btn-slide">
-                            <i class="fa fa-clock-o" ng-click="openModalScheduleSection(section)" aria-hidden="true" tooltip-placement="bottom" uib-tooltip="Đặt lịch" tooltip-append-to-body="true"></i>
-                        </div> -->
+                
               </div>
             </div>
             <div ui-sortable="lectureSortableOptions" class="ng-pristine ng-untouched ng-valid ui-sortable">
               <li  *ngFor="let lecture of lessons" class="lecture"
-                
                 style="border-top: 1px solid rgb(222, 222, 222);">
                 <div class="lec-ele col-xs-6 col-sm-7 col-md-8 col-lg-8">
 
-                  <div class="lec-name pull-left ">
+                  <!-- <div class="lec-name pull-left ">
                     <div >
                       <span class="lec-title-display">Bài {{lecture.position}}: {{lecture.name}} </span>
                     </div>
 
-                  </div>
+                  </div> -->
                 </div>
                 <div class="lec-ele col-xs-6 col-sm-5 col-md-4 col-lg-4 pull-right">
                   <div class="lec-ic pull-right ">

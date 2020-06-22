@@ -76,7 +76,7 @@
                                             <span *ngIf="!item.coachingService">✘</span>
                                         </td>
                                         <td>
-                                            <span>{{item.description.length > 200 ? item.description.substring(0,200) + '...' : item.description}}</span>
+                                            <span [innerHTML]="item.description">{{item.description.length > 200 ? item.description.substring(0,200) + '...' : item.description}}</span>
                                         </td>
                                         <td>
                                             <span>{{item.courseStatus}}</span>

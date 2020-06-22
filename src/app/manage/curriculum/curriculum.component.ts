@@ -58,6 +58,7 @@ export class CurriculumComponent implements OnInit {
       });
     })
   }
+  
   getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
