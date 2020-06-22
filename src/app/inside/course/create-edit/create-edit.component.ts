@@ -102,6 +102,7 @@ export class CreateEditCourseComponent implements OnInit {
     this.myValue = CourseStatus[value];
   }
 
+  
 
   createForm() {
     var objCreated = [];
@@ -110,8 +111,7 @@ export class CreateEditCourseComponent implements OnInit {
       Validators.minLength(2)
     ]);
     objCreated['description'] = new FormControl('', [
-      Validators.required,
-      Validators.minLength(2)
+      Validators.required
     ]);
     objCreated['videoIntroduce'] = new FormControl('', [
       Validators.required
@@ -119,9 +119,7 @@ export class CreateEditCourseComponent implements OnInit {
     objCreated['price'] = new FormControl('', [
       Validators.required
     ]);
-    objCreated['discount'] = new FormControl('', [
-      Validators.required
-    ]);
+    objCreated['discount'] = [''];
     objCreated['teacherIds'] = new FormControl('', [
       Validators.required
     ]);
@@ -136,8 +134,7 @@ export class CreateEditCourseComponent implements OnInit {
       Validators.minLength(2),
     ]);
     objCreated['level'] = new FormControl('', [
-      Validators.required,
-      Validators.minLength(2)
+      Validators.required
     ]);
     objCreated['introduce'] = new FormControl('', [
       Validators.required,
@@ -148,8 +145,7 @@ export class CreateEditCourseComponent implements OnInit {
       Validators.minLength(2)
     ]);
     objCreated['thumbnail'] = new FormControl('', [
-      Validators.required,
-      Validators.minLength(2)
+      Validators.required
     ]);
     objCreated['followUpRequestMax'] = '';
     this.formCreated = this.fb.group(objCreated);
@@ -157,7 +153,7 @@ export class CreateEditCourseComponent implements OnInit {
 
   async createdBook() {
     // let abc = this.formCreated.value.description
-    console.log(this.htmlSpecialChars(this.formCreated.value.description))
+    console.log(this.formCreated.value.description)
     this.sttLoading = true;
     this.sttNotifi = false;
     if (!this.sttAdd) {
@@ -186,55 +182,57 @@ export class CreateEditCourseComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       });
     } else {
-      if
-        (this.formCreated.value.invalid) {
-        alert("invalid");
-        return;
-      }
-      this.downloadVidURL.subscribe(urlVid => {
-        this.downloadURL.subscribe(url => {
-          this.afs.collection('courses').add({
-            categoryId: this.formCreated.value.categoryId,
-            createdAt: new Date().getTime(),
-            description: this.htmlSpecialChars(this.formCreated.value.description),
-            id: '',
-            name: this.formCreated.value.name,
-            introduce: this.formCreated.value.introduce,
-            videoIntroduce: urlVid,
-            teacherIds: this.formCreated.value.teacherIds,
-            courseStatus: this.formCreated.value.courseStatus,
-            followUpRequestMax: this.formCreated.value.followUpRequestMax,
-            price: this.formCreated.value.price,
-            discount: this.formCreated.value.discount,
-            coachingService: true,
-            level: this.formCreated.value.level,
-            benefit: this.formCreated.value.benefit,
-            discountCode: 'ABCD123',
-            followUpRequestAccept: true,
-            updatedAt: new Date().getTime(),
-            likedUserIds: '',
-            thumbnail: url,
-            tag: this.formCreated.value.tag.split(',')
-          }).then(async a => {
-            await this.afs.doc('courses/' + a.id).update({
-              id: a.id
+      if(this.urlVid.length == 0) {
+        
+          alert("invalid")
+          return;
+      } 
+      
+        this.downloadVidURL.subscribe(urlVid => {
+          this.downloadURL.subscribe(url => {
+            this.afs.collection('courses').add({
+              categoryId: this.formCreated.value.categoryId,
+              createdAt: new Date().getTime(),
+              description: this.formCreated.value.description,
+              id: '',
+              name: this.formCreated.value.name,
+              introduce: this.formCreated.value.introduce,
+              videoIntroduce: urlVid,
+              teacherIds: this.formCreated.value.teacherIds,
+              courseStatus: this.formCreated.value.courseStatus,
+              followUpRequestMax: this.formCreated.value.followUpRequestMax,
+              price: this.formCreated.value.price,
+              discount: this.formCreated.value.discount,
+              coachingService: true,
+              level: this.formCreated.value.level,
+              benefit: this.formCreated.value.benefit,
+              discountCode: 'ABCD123',
+              followUpRequestAccept: true,
+              updatedAt: new Date().getTime(),
+              likedUserIds: '',
+              thumbnail: url,
+              tag: this.formCreated.value.tag.split(',')
+            }).then(async a => {
+              await this.afs.doc('courses/' + a.id).update({
+                id: a.id
+              });
+              alert('them thanh cong')
+              window.location.href = '/course';
+              this.sttLoading = false;
+              this.sttNotifi = true;
+              this.textNotifi = 'Thêm thành công';
+              this.sttTextNotifi = 'toast-success';
+              this.formCreated.reset();
+              
+            }).catch(er => {
+              this.sttLoading = false;
+              this.sttNotifi = true;
+              this.textNotifi = er.msg;
+              this.sttTextNotifi = 'toast-error';
             });
-            alert('them thanh cong')
-            this.router.navigate["/course"];
-            this.sttLoading = false;
-            this.sttNotifi = true;
-            this.textNotifi = 'Thêm thành công';
-            this.sttTextNotifi = 'toast-success';
-            this.formCreated.reset();
-            
-          }).catch(er => {
-            this.sttLoading = false;
-            this.sttNotifi = true;
-            this.textNotifi = er.msg;
-            this.sttTextNotifi = 'toast-error';
-          });
-        })
-      });
+          })
+        });
+      
     }
     // if (this.formCreated.value.categoryId.length == 0) {
     //   alert('phải chọn danh mục đã');
@@ -242,16 +240,16 @@ export class CreateEditCourseComponent implements OnInit {
     // }
   }
 
-  htmlSpecialChars(str){
-    if(typeof(str) == "string"){
-      str = str.replace(/&/g, "&");
-		str = str.replace(/"/g, '"');
-		str = str.replace(/'/g, "'");
-		str = str.replace(/</g, "<");
-		str = str.replace(/>/g, ">");
-    }
-    return str;
-  }
+  // htmlSpecialChars(str){
+  //   if(typeof(str) == "string"){
+  //     str = str.replace(/&/g, "&");
+	// 	str = str.replace(/"/g, '"');
+	// 	str = str.replace(/'/g, "'");
+	// 	str = str.replace(/</g, "<");
+	// 	str = str.replace(/>/g, ">");
+  //   }
+  //   return str;
+  // }
 
   async deleted() {
     this.afs.doc('courses/' + this.idCourse).delete().then(a => {

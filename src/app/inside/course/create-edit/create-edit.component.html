@@ -69,13 +69,14 @@
 
             <div class="row" style="margin-bottom: 5%;">
 
-              <div class="input col-md-12">
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModalVid">
+              <div class=" input col-md-12">
+                <button  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModalVid" required>
                   Chọn video
                 </button>
+                
               </div>
               <div class="col-md-12">
-                <ngx-dropzone-preview *ngFor="let urlVid of urlVid" [removable]="true" (removed)="onRemoveVid(urlVid)">
+                <ngx-dropzone-preview *ngFor="let urlVid of urlVid" [removable]="true" (removed)="onRemoveVid(urlVid)">                  
                   <ngx-dropzone-label>
                     <iframe accept="video/mp4" [src]="urlVid | safe" frameborder="0"></iframe>
                   </ngx-dropzone-label>
@@ -91,7 +92,7 @@
                     </div>
 
                     <div class="modal-body">
-                      <ngx-dropzone (change)="onSelected($event)">
+                      <ngx-dropzone accept="video/mp4" (change)="onSelected($event)">
 
                         <ngx-dropzone-label>Chọn video</ngx-dropzone-label>
                         <ngx-dropzone-preview *ngFor="let urlVid of urls" [removable]="true"
@@ -102,6 +103,7 @@
                         </ngx-dropzone-preview>
                       </ngx-dropzone>
                       <input [hidden] matInput type="text" formControlName="videoIntroduce">
+                      
                     </div>
 
                     <div class="modal-footer">
@@ -137,10 +139,6 @@
                 <div *ngIf="formCreated.get('tag').errors.required">
                   This field is required.
                 </div>
-
-                <div *ngIf="formCreated.get('tag').errors.minlength">
-                  This field must be at least 2 characters long.
-                </div>
               </div>
             </mat-form-field>
             <mat-form-field>
@@ -167,22 +165,11 @@
                 <div *ngIf="formCreated.get('level').errors.required">
                   This field is required.
                 </div>
-
-                <div *ngIf="formCreated.get('level').errors.minlength">
-                  This field must be at least 2 characters long.
-                </div>
               </div>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Phần trăm giảm giá</mat-label>
               <input matInput type="number" formControlName="discount">
-              <div
-                *ngIf="formCreated.get('discount').invalid && (formCreated.get('discount').dirty || formCreated.get('discount').touched)"
-                class="alert alert-danger">
-                <div *ngIf="formCreated.get('discount').errors.required">
-                  This field is required.
-                </div>
-              </div>
               <span matSuffix> %</span>
             </mat-form-field>
 
@@ -196,13 +183,7 @@
             <mat-form-field>
               <mat-label>Giới hạn followUp</mat-label>
               <input matInput type="number" formControlName="followUpRequestMax">
-              <div
-                *ngIf="formCreated.get('followUpRequestMax').invalid && (formCreated.get('followUpRequestMax').dirty || formCreated.get('followUpRequestMax').touched)"
-                class="alert alert-danger">
-                <div *ngIf="formCreated.get('followUpRequestMax').errors.required">
-                  This field is required.
-                </div>
-              </div>
+              
             </mat-form-field>
 
             <mat-form-field>
