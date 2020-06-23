@@ -182,9 +182,9 @@ export class CreateEditCourseComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       });
     } else {
-      if(this.urlVid.length == 0) {
+      if(this.urlVid.length == 0 || this.urls.length == 0) {
         
-          alert("invalid")
+          alert("Video or Image not selected.")
           return;
       } 
       
@@ -217,13 +217,12 @@ export class CreateEditCourseComponent implements OnInit {
                 id: a.id
               });
               alert('them thanh cong')
-              window.location.href = '/course';
               this.sttLoading = false;
               this.sttNotifi = true;
               this.textNotifi = 'Thêm thành công';
               this.sttTextNotifi = 'toast-success';
               this.formCreated.reset();
-              
+              window.location.href = '/course';
             }).catch(er => {
               this.sttLoading = false;
               this.sttNotifi = true;

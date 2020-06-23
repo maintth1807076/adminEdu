@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {takeWhile} from 'rxjs/operators';
@@ -58,12 +58,19 @@ export class CreateEditWeekComponent implements OnInit {
   }
 
   createForm() {
-    var objCreated = [];
-    objCreated['name'] = [''];
-    objCreated['description'] = [''];
-    objCreated['position'] = [''];
-    objCreated['courseId'] = [''];
-    this.formCreated = this.fb.group(objCreated);
+    this.formCreated = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      position: ['', Validators.required],
+      courseId: ['', Validators.required],
+      categoryId: ['', Validators.required]
+    })
+    // var objCreated = [];
+    // objCreated['name'] = [''];
+    // objCreated['description'] = [''];
+    // objCreated['position'] = [''];
+    // objCreated['courseId'] = [''];
+    // this.formCreated = this.fb.group(objCreated);
   }
 
   filterCourseByCategory(id: string) {
@@ -95,10 +102,14 @@ export class CreateEditWeekComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       })
     } else {
-      if(this.formCreated.value.courseId.length == 0){
-        alert('phải chọn khóa học đã');
+      if(this.formCreated.invalid){
+        alert("invalid");
         return;
       }
+      // if(this.formCreated.value.courseId.length == 0){
+      //   alert('phải chọn khóa học đã');
+      //   return;
+      // }
       this.afs.collection('weeks').add({
         name: this.formCreated.value.name,
         courseId: this.formCreated.value.courseId,

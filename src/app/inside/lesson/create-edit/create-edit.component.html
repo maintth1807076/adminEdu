@@ -17,11 +17,14 @@
         <mat-form-field *ngIf="!sttAdd">
           <mat-label> Bài</mat-label>
           <input matInput type="text" formControlName="position">
+          <div *ngIf="f.position.errors" class="invalid-feedback">
+            <div *ngIf="f.position.errors.required">This field is required</div>
+        </div>
         </mat-form-field>
         <br>
         <mat-form-field *ngIf="lessonId == null || lessonId.length == 0">
           <mat-label>Chọn danh mục</mat-label>
-          <mat-select (selectionChange)="filterCourseByCategory($event.value)">
+          <mat-select formControlName="categoryId" (selectionChange)="filterCourseByCategory($event.value)">
             <mat-option [value]="item.id" *ngFor="let item of categories">
               {{item.name}}
             </mat-option>
@@ -29,7 +32,7 @@
         </mat-form-field>
         <mat-form-field *ngIf="lessonId == null || lessonId.length == 0">
           <mat-label>Chọn khóa học</mat-label>
-          <mat-select (selectionChange)="filterWeekByCourse($event.value)">
+          <mat-select formControlName="courseId" (selectionChange)="filterWeekByCourse($event.value)">
             <mat-option [value]="item.id" *ngFor="let item of courses">
               {{item.name}}
             </mat-option>
@@ -106,7 +109,7 @@
           <mat-label>Thời gian dự định</mat-label>
           <input matInput type="number" formControlName="estimatedTime">
         </mat-form-field>
-        <button (click)="createdLesson()" type="button" class="btn btn-success m-30 submit">Lưu</button>
+        <button (click)="createdLesson()" type="submit" class="btn btn-success m-30 submit">Lưu</button>
       </form>
     </div>
   </div>

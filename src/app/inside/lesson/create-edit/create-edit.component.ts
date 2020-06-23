@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -17,6 +17,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class CreateEditLessonComponent implements OnInit {
 
   formCreated: FormGroup;
+  submitted = false;
   alive: boolean = true;
   sttNotifi: boolean = false;
   textNotifi: string;
@@ -89,16 +90,30 @@ export class CreateEditLessonComponent implements OnInit {
   }
 
   createForm() {
-    var objCreated = [];
-    objCreated['name'] = [''];
-    objCreated['link'] = [''];
-    objCreated['description'] = [''];
-    objCreated['estimatedTime'] = [''];
-    objCreated['position'] = [''];
-    objCreated['weekId'] = [''];
-    objCreated['videoLesson'] = [''];
-    this.formCreated = this.fb.group(objCreated);
+    this.formCreated = this.fb.group({
+      name:['', [Validators.required, Validators.minLength(4)]],
+      link: ['', Validators.required],
+      description: ['', Validators.required],
+      estimatedTime: ['', Validators.required],
+      position: ['', Validators.required],
+      videoLesson: ['', Validators.required],
+      weekId: ['', Validators.required],
+      categoryId : ['', Validators.required],
+      courseId: ['', Validators.required]
+    })
+    // var objCreated = [];
+    // objCreated['name'] = [''];
+    // objCreated['link'] = [''];
+    // objCreated['description'] = [''];
+    // objCreated['estimatedTime'] = [''];
+    // objCreated['position'] = [''];
+    // objCreated['weekId'] = [''];
+    // objCreated['videoLesson'] = [''];
+    // this.formCreated = this.fb.group(objCreated);
   }
+
+  get f() { return this.formCreated.controls; }
+
   async createdLesson() {
     this.sttLoading = true;
     this.sttNotifi = false;
@@ -124,10 +139,14 @@ export class CreateEditLessonComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       })
     } else {
-      if(this.formCreated.value.weekId == 0){
-        alert('Phải chọn chương đã')
+      if(this.formCreated.invalid && this.urlVid.length == 0){
+        alert("invalid")
         return;
       }
+      // if(this.formCreated.value.weekId == 0){
+      //   alert('Phải chọn chương đã')
+      //   return;
+      // }
       this.downloadVidURL.subscribe(urlVid => {
         this.afs.collection('lessons').add({
           weekId: this.formCreated.value.weekId,
@@ -143,13 +162,15 @@ export class CreateEditLessonComponent implements OnInit {
         }).then(a => {
           this.afs.doc('lessons/' + a.id).update({
             id: a.id
-          })
+          })        
+          
           alert('them thanh cong')
           this.sttLoading = false;
           this.sttNotifi = true;
           this.textNotifi = 'Thêm thành công';
           this.sttTextNotifi = 'toast-success';
-          this.formCreated.reset()
+          this.formCreated.reset();
+          window.location.href = '/lesson';
         }).catch(er => {
           this.sttLoading = false;
           this.sttNotifi = true;

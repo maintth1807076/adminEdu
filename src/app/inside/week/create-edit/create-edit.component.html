@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field *ngIf="weekId == null || weekId.length == 0">
           <mat-label>Chọn danh mục</mat-label>
-          <mat-select (selectionChange)="filterCourseByCategory($event.value)">
+          <mat-select formControlName="categoryId" (selectionChange)="filterCourseByCategory($event.value)">
             <mat-option [value]="item.id" *ngFor="let item of categories">
               {{item.name}}
             </mat-option>
@@ -41,7 +41,7 @@
           <mat-label>Nội dung</mat-label>
           <input matInput type="text" formControlName="description">
         </mat-form-field>
-        <button (click)="createdWeek()" type="button" class="btn btn-success m-30 submit">Lưu</button>
+        <button (click)="createdWeek()" type="submit" class="btn btn-success m-30 submit">Lưu</button>
       </form>
     </div>
   </div>
