@@ -21,13 +21,14 @@ export class CurriculumComponent implements OnInit {
   nameDoc: string;
 
   courseId: string
-  weeks$: Observable<any>
-  lessons: any = []
+  weeks: any = [];
+  lessons: any = [];
+  less = [];
 
   constructor(
     private afs: AngularFirestore,
     private change: ChangeDetectorRef
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     let url = window.location.href;
@@ -37,9 +38,12 @@ export class CurriculumComponent implements OnInit {
     this.getDataClient();
   }
 
-  getDataClient() {
-    // this.weeks = [ { "position": 1, "description": "Giới thiệu chung", "createdAt": 1591599192783, "id": "nr58X0FFOlG4hYzTWTZv", "courseId": "t6LPWXU4HIazo8y4fhDY", "name": "Giới thiệu chung" }, { "courseId": "t6LPWXU4HIazo8y4fhDY", "description": "Âm nhạc và giá trị", "position": 2, "name": "Âm nhạc và giá trị", "createdAt": 1591599219896, "id": "zP1ktAoUnjHEr6IA6cVG" }, { "updatedAt": 1592812348527, "id": "CSFIZZzkvJyX9wqmHSI1", "description": "Học bài chú ếch con", "createdAt": 1592812348527, "position": 3, "name": "Chương 3 Chú ếch con", "courseId": "t6LPWXU4HIazo8y4fhDY" } ]
-   this.weeks$ = this.afs.collection('weeks', ref => ref.where('courseId', '==', this.courseId)).valueChanges();
+ getDataClient() {
+    this.afs.collection('weeks', ref => ref.where('courseId', '==', this.courseId)).valueChanges().subscribe(data => {
+        this.weeks = data.sort((a, b) => {
+          return a['position'] - b['position']
+        })
+    });
     this.afs.collection('courses', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
@@ -49,12 +53,13 @@ export class CurriculumComponent implements OnInit {
         if (this.idDoc != null && this.idDoc.length > 0) {
           this.filterByCategory(this.idDoc);
         }
+        
       })
   }
 
   getLesson(id) {
     console.log("[id lessoon]", id);
-    
+    // this.lessons = this.afs.collection('lessons',ref => ref.where('weekId', '==', this.idDoc)).valueChanges;
     this.afs.collection('lessons', ref => ref.where('weekId', '==', id)).valueChanges().subscribe(data => {
       console.log("data lesson ", data);
       this.lessons = data.sort((a, b) => {
@@ -63,15 +68,16 @@ export class CurriculumComponent implements OnInit {
     })
   }
 
-  getWeekId(id){
-    this.getLesson(id);
+  getWeekId(id) {
+    this.afs.collection('lessons', ref => ref.where('weekId', '==', id)).valueChanges().subscribe(data => {
+      console.log("data", data);
+      this.less = data.sort((a, b) => {
+        return a['position'] - b['position']
+      });
+    });
+    // this.getLesson(id);
   }
 
-  // trackByFn(index,lecture){
-  //   console.log(lecture.id);
-  //   return index;
-  // }
-  
   getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -82,9 +88,9 @@ export class CurriculumComponent implements OnInit {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  
+
   filterByCategory(val) {
-    if(val == 'all'){
+    if (val == 'all') {
       this.listDataCategories = this.permanentListDataCategories1;
       return;
     }

@@ -102,7 +102,7 @@ export class CreateEditWeekComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       })
     } else {
-      if(this.formCreated.invalid){
+      if(this.formCreated.value.courseId.length == 0 || this.formCreated.value.categoryId == 0){
         alert("invalid");
         return;
       }
@@ -126,7 +126,8 @@ export class CreateEditWeekComponent implements OnInit {
         this.sttNotifi = true;
         this.textNotifi = 'Thêm thành công';
         this.sttTextNotifi = 'toast-success';
-        this.formCreated.reset()
+        window.location.href = '/week';
+        this.formCreated.reset();
       }).catch(er => {
         this.sttLoading = false;
         this.sttNotifi = true;
