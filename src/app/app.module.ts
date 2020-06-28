@@ -17,6 +17,8 @@ import {RouterModule} from '@angular/router';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import { CKEditorModule } from 'ng2-ckeditor';
 
+import { ToastrModule} from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,13 @@ import { CKEditorModule } from 'ng2-ckeditor';
         HttpClientModule,
         BrowserAnimationsModule,
         NgxDropzoneModule,
-        CKEditorModule
+        CKEditorModule,
+        ToastrModule.forRoot({
+          timeOut: 10000,
+          positionClass: 'toast-top-right',
+          preventDuplicates: false,
+        }),
+        
     ],
   providers: [AuthGuard, AuthService, UserService],
   bootstrap: [AppComponent]

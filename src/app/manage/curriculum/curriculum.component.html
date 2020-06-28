@@ -1,25 +1,27 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
+      <div class="col-md-12 m-3">
+        <div class="info-course col-sm-11">
+          <a [routerLink]="['/course/create-edit']" [queryParams]="{id: courseId, name: nameDoc, idCategories: idDoc}"
+            class="btn btn-circle btn-custom purple-color">Thông tin khóa
+            học</a>
+        </div>
+        <div class="dropdown menu-curri col-sm-1">
+          <button class="btn btn-circle btn-custom purple-color dropdown-toggle " type="button"
+            data-toggle="dropdown">Thêm
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a [routerLink]="['/lesson/create-edit']"><i class="fa fa-desktop"></i>Bài giảng mới</a></li>
+            <li><a href="#"><i class="fa fa-graduation-cap"></i>Bài kiểm tra</a></li>
+            <li><a [routerLink]="['/week/create-edit']"><i class="fa fa-folder-o"></i>Chương mục</a></li>
+            <!-- <li><button type="button" class=" btn-link" data-toggle="modal" data-target="#myModal"><i
+            class="fa fa-folder-o"></i>Chương
+          mục</button></li> -->
+          </ul>
+        </div>
+      </div>
 
-      <div class="info-course col-sm-11">
-        <a [routerLink]="['/course/create-edit']" [queryParams]="{id: courseId, name: nameDoc, idCategories: idDoc}"
-          class="btn btn-circle btn-custom purple-color">Thông tin khóa
-          học</a>
-      </div>
-      <div class="dropdown menu-curri col-sm-1">
-        <button class="btn btn-circle btn-custom purple-color dropdown-toggle " type="button"
-          data-toggle="dropdown">Thêm
-          <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a [routerLink]="['/lesson/create-edit']"><i class="fa fa-desktop"></i>Bài giảng mới</a></li>
-          <li><a href="#"><i class="fa fa-graduation-cap"></i>Bài kiểm tra</a></li>
-          <li><a [routerLink]="['/week/create-edit']"><i class="fa fa-folder-o"></i>Chương mục</a></li>
-          <!-- <li><button type="button" class=" btn-link" data-toggle="modal" data-target="#myModal"><i
-                class="fa fa-folder-o"></i>Chương
-              mục</button></li> -->
-        </ul>
-      </div>
 
       <!-- <div class="row" *ngFor="let item of weeks">
         <div>
@@ -161,20 +163,73 @@
 
 
       <div class="accordion" id="accordionExample">
-        <div class="card" *ngFor="let item of weeks">
-          <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-              <button (click)="getWeekId(item.id)"  class="btn btn-link collapsed" type="button" data-toggle="collapse"  [attr.data-target]="'#' + item.id" aria-expanded="true" aria-controls="collapseOne">
-                Bài {{item.position}}: {{item.name}}
-              </button>
-            </h2>
+        <div class="sections col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngFor="let item of weeks">
+          <div class="section portlet light">
+            <ul class="lectures">
+              <div class="lecture sec-title" id="headingOne">
+                <div class="lec-ele col-xs-6 col-sm-7 col-md-8 col-lg-8">
+                  <div class="lec-ic pull-left" style="margin-top: 20px">
+                    <i class="fa fa-bars"></i>
+                  </div>
+
+                  <div class="lec-name pull-left">
+                    <div>
+                      <span>
+                        <button (click)="getWeekId(item.id)" class="btn btn-link" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#' + item.id" aria-expanded="true" aria-controls="collapseOne">
+                          Chương {{item.position}}: {{item.name}}
+                        </button>
+                      </span>
+                    </div>
+
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <!-- <h2 class="mb-0">
+                  <button (click)="getWeekId(item.id)" class="btn btn-link" type="button" data-toggle="collapse"
+                    [attr.data-target]="'#' + item.id" aria-expanded="true" aria-controls="collapseOne">
+                    Bài {{item.position}}: {{item.name}}
+                  </button>
+                </h2> -->
+              </div>
+
+              <div id="{{item.id}}" class="collapse lecture" aria-labelledby="headingOne"
+                data-parent="#accordionExample">
+                <!-- <div class="lec-ele col-xs-6 col-sm-7 col-md-8 col-lg-8" *ngFor="let les of less ">
+                  <div class="lec-name pull-left">
+                    Bài {{les.position}}: {{les.name}}
+                  </div>
+                  
+                </div> -->
+
+                <li *ngFor="let les of less " class="lecture" style="border-top: 1px solid rgb(222, 222, 222);">
+                  <div class="lec-ele col-xs-6 col-sm-7 col-md-8 col-lg-8">
+
+                    <div class="lec-name pull-left ">
+                      <div>
+                        <span class="lec-title-display" [routerLink]="['/lesson/create-edit']" [queryParams]="{id: les.id}">Bài {{les.position}}: {{les.name}} </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="lec-ele col-xs-6 col-sm-5 col-md-4 col-lg-4 pull-right">
+                    <div class="lec-ic pull-right ">
+                      <i class="fa fa-check-square toggle-on" uib-tooltip="Xuất bản"></i>
+                    </div>
+
+                    <div class="lec-ic pull-right ">
+                      <i uib-tooltip="Xóa bài giảng đã chọn" class="fa fa-trash-o" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="lec-ic pull-right ">
+                      <i [routerLink]="['/lesson/create-edit']" [queryParams]="{id: les.id}" uib-tooltip="Sửa bài giảng" class="fa fa-edit" aria-hidden="true"></i>
+                    </div>
+
+                  </div>
+              </div>
+            </ul>
           </div>
-      
-          <div id="{{item.id}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body" *ngFor="let les of less ">
-              Bài {{les.position}}: {{les.name}}
-            </div>
-          </div>
+
+
         </div>
       </div>
     </div>

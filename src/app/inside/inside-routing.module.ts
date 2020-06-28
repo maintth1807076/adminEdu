@@ -15,6 +15,8 @@ import {CreateEditSyllabusComponent} from './syllabus/create-edit/create-edit.co
 import {WeekComponent} from './week/week.component';
 import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
 import {InsideComponent} from './inside.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+import { CreateEditScheduleComponent } from './schedule/create-edit-schedule/create-edit-schedule.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,14 @@ const routes: Routes = [
         path: 'syllabus/create-edit',
         component: CreateEditSyllabusComponent
       },
+      {
+        path: 'schedule',
+        component: ScheduleComponent
+      },
+      {
+        path: 'schedule/create-edit',
+        component: CreateEditScheduleComponent
+      }
     ]
   }
 ];

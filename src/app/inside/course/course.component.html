@@ -76,7 +76,8 @@
                                             <span *ngIf="!item.coachingService">✘</span>
                                         </td>
                                         <td>
-                                            <span [innerHTML]="item.description">{{item.description.length > 200 ? item.description.substring(0,200) + '...' : item.description}}</span>
+                                            <span
+                                                [innerHTML]="item.description">{{item.description.length > 200 ? item.description.substring(0,200) + '...' : item.description}}</span>
                                         </td>
                                         <td>
                                             <span>{{item.courseStatus}}</span>
@@ -103,15 +104,15 @@
                                         </td>
                                         <!-- <td><img src={{item.urlImg}} width="100" alt="loading"></td> -->
                                         <td>
-                                            <span [routerLink]="['/course/create-edit']"
+                                            <div [routerLink]="['/course/create-edit']"
                                                 [queryParams]="{id: item.id, name: nameDoc, idCategories: idDoc}">
-                                                <button class="btn btn-primary">Chỉnh sửa</button>
-                                            </span>
-                                                 | 
-                                            <span [routerLink]="['/bai-hoc']"
-                                                [queryParams]="{courseName: item.name, courseId: item.id, idCategories: idDoc, nameCategories: nameDoc}">Bài
-                                                học
-                                            </span>
+                                                <button class="btn" style="font-size: 12px;background-color: MidnightBlue;margin: 4px 2px;padding: 10px 20px;">Edit</button>
+                                            </div>
+
+                                            <div [routerLink]="['/bai-hoc']"
+                                                [queryParams]="{courseName: item.name, courseId: item.id, idCategories: idDoc, nameCategories: nameDoc}">
+                                                <button class="btn" style="font-size: 12px;background-color: LightSalmon;margin: 4px 2px;padding: 10px 20px;">Lesson</button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -123,14 +124,12 @@
                                 </div>
                                 <div class="row ">
                                     <div class="col-md-2" *ngFor="let item of listDataCategories"
-                                        [routerLink]="['/manage/course/curriculum']"
-                                        [queryParams]="{courseId: item.id}">
+                                        (click) = "clickCourse(item.id)">
                                         <a class="course-list-item sp-section-sort-handle ui-sortable-handle">
                                             <div class="course portlet light" context="contextCourse"
                                                 ng-right-click="showContextMenu(course)">
 
-                                                <div class="course-avatar"
-                                                    style="
+                                                <div class="course-avatar" style="
                                                      background-size: cover;">
                                                     <img src="{{item.thumbnail}}" alt="">
                                                 </div>

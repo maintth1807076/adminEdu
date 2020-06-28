@@ -44,7 +44,19 @@ export class CurriculumComponent implements OnInit {
           return a['position'] - b['position']
         })
     });
-    this.afs.collection('courses', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
+    // this.afs.collection('courses', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
+    //   .pipe(takeWhile(() => this.alive))
+    //   .subscribe(data => {
+    //     this.listDataCategories = data;
+    //     this.permanentListDataCategories1 = data;
+    //     this.permanentListDataCategories = data;
+    //     if (this.idDoc != null && this.idDoc.length > 0) {
+    //       this.filterByCategory(this.idDoc);
+    //     }
+        
+    //   })
+
+    this.afs.collection('lessons', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
         this.listDataCategories = data;

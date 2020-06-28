@@ -151,7 +151,7 @@ export class CreateEditLessonComponent implements OnInit {
         this.afs.collection('lessons').add({
           weekId: this.formCreated.value.weekId,
           name: this.formCreated.value.name,
-          estimatedTime: this.formCreated.value.estimatedTime,
+          estimatedTime: this.formCreated.value.estimatedTime * 60000,
           link: this.formCreated.value.link,
           videoLesson: urlVid,
           createdAt: new Date().getTime(),
