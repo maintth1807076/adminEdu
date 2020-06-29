@@ -19,6 +19,7 @@ enum CourseStatus {
   templateUrl: './create-edit.component.html',
   styleUrls: ['./create-edit.component.css'],
   animations: []
+
 })
 export class CreateEditCourseComponent implements OnInit {
 
