@@ -1,1 +1,49 @@
-<p>schedule works!</p>
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
+<div class="wrap-content row">
+    <div class="col-md-12">
+        <div class="col-lg-4">
+            <p>
+                <strong> Lộ trình học tập </strong><br><br>
+                Thêm các khóa học trong lộ trình
+            </p>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card login-card register-card">
+                <div class="card-body">
+
+                    <form [formGroup]="formCreated">
+                        <!-- <mat-form-field style="display: block;" > -->
+                        <div class="row">
+                            <mat-label class="col-md-8" style="font-weight: 600;">Chọn khóa học</mat-label>
+                            <mat-label class="col-md-4">
+                                <div style="text-align: right;">
+                                    <button (click)="createdScheduleCourse()" type="submit"
+                                        class="btn btn-circle btn-custom purple-color m-30 submit">Lưu
+                                    </button>
+                                </div>
+                            </mat-label>
+                        </div>
+
+                        <mat-selection-list *ngIf="idCourse == null || idCourse.length == 0" formControlName="courseId"
+                            (selectionChange)="filterWeekByCourse($event.option)">
+                            <mat-list-option [value]="item.id" [selected]="item.selected" *ngFor="let item of courses">
+                                {{item.selected}} {{item.name}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                        <!-- </mat-form-field> -->
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

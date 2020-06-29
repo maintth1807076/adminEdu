@@ -21,17 +21,17 @@ export class LessonComponent implements OnInit {
 
   getDataClient() {
     this.afs.collection('lessons', ref => ref.orderBy('createdAt', 'desc')).valueChanges()
-    .pipe(takeWhile(() => this.alive))
-    .subscribe(data => {
-      this.lessons = data;
-    })
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(data => {
+        this.lessons = data;
+      })
     this.afs.collection('weeks').valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
         this.weeks = data;
       })
   }
- getParameterByName(name, url) {
+  getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -46,7 +46,7 @@ export class LessonComponent implements OnInit {
 
   getWeekName(id): string {
     for (let i = 0; i < this.weeks.length; i++) {
-      if(this.weeks[i].id == id){
+      if (this.weeks[i].id == id) {
         return this.weeks[i].name;
       }
     }
@@ -57,8 +57,9 @@ export class LessonComponent implements OnInit {
     this.afs.collection('lessons', ref => ref.where('weekId', '==', id)).valueChanges()
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
-        this.lessons = data.sort((a, b)=> {
-          return  a['position'] - b['position']});
+        this.lessons = data.sort((a, b) => {
+          return a['position'] - b['position']
+        });
       })
   }
 }

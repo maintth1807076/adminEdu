@@ -20,7 +20,11 @@
             <div class="card login-card register-card">
                 <div class="card-body">
                     <h2 class="card-title" *ngIf="sttAdd">Tạo lộ trình</h2>
-                    <h2 class="card-title" *ngIf="!sttAdd"></h2>
+                    <h2 class="card-title" *ngIf="!sttAdd">
+                        <div class="menu-course">
+                            <a [routerLink]="['/manage/schedule']" class="btn btn-circle btn-custom purple-color">Cac khoa hoc</a>
+                        </div>
+                    </h2>
                     <form [formGroup]="formCreated">
                         <mat-form-field style="display: block;">
                             <mat-label>Tên lộ trình</mat-label>

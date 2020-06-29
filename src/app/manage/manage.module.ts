@@ -7,12 +7,22 @@ import { CourseComponent } from './course/course.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
 @NgModule({
   declarations: [ManageComponent, CourseComponent, CurriculumComponent, ScheduleComponent],
   imports: [
     CommonModule,
-    ManageRoutingModule
+    ManageRoutingModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatListModule,
+    FormsModule
   ]
 })
 export class ManageModule { }
