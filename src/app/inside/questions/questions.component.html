@@ -1,0 +1,105 @@
+<div class="wrap-content container question">
+    <div class="form-group">
+        <div class="new-question">
+            <div class="row">
+                <div class="hover-ele span-toogle">
+                    <span>Tạo câu hỏi
+                        <i class="fa fa-angle-down"></i>
+                    </span>
+                </div>
+            </div>
+            <!-- <div *ngIf="isDisplayed" id="divContent1"> -->
+            <div *ngIf= "isShow" id="divContent1">
+                Div Content 1
+            </div>
+            <div style="display: none;" id="divContent2">
+                Div Content 2
+            </div>
+            <div class="question-create-type" *ngIf="isShow">
+                <div class="question-type-item" (click)="toggleDisplay()">
+                    <div class="question-type-icon">
+                        <i class="fa fa-random"></i>
+                    </div>
+                    <div class="question-type-title">Đúng/Sai</div>
+                </div>
+                <div class="question-type-item" (click)="showMe($event, 'AnOption')">
+                    <div class="question-type-icon">
+                        <i class="fa fa-dot-circle-o"></i>
+                    </div>
+                    <div class="question-type-title">Một lựa chọn</div>
+                </div>
+                <div class="question-type-item">
+                    <div class="question-type-icon">
+                        <i class="fa fa-check-square-o"></i>
+                    </div>
+                    <div class="question-type-title">Nhiều lựa chọn</div>
+                </div>
+                <div class="question-type-item">
+                    <div class="question-type-icon">
+                        <i class="fa fa-exchange"></i>
+                    </div>
+                    <div class="question-type-title">Ghép đáp án</div>
+                </div>
+                <div class="question-type-item">
+                    <div class="question-type-icon">
+                        <i class="fa fa-list-alt"></i>
+                    </div>
+                    <div class="question-type-title">Chọn từ</div>
+                </div>
+                <div class="question-type-item">
+                    <div class="question-type-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </div>
+                    <div class="question-type-title">Điền từ</div>
+                </div>
+                <div class="question-type-item">
+                    <div class="question-type-icon">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </div>
+                    <div class="question-type-title">Tự luận</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-search">
+            <div class="row">
+                <div class="portlet light user-tool-bar">
+                    <div class="hover-ele add-filter col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                        <a href="#" class="change-purple">
+                            <div class="hidden"></div>
+                            Lọc theo
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                        <form class="search-form ng-valid ng-dirty ng-valid-parse">
+                            <div class="input-group input-group-question">
+                                <span class="input-group-btn">
+                                    <a class="btn submit icon-search">
+                                        <i class="fa fa-search change-purple"></i>
+                                    </a>
+                                </span>
+                                <input type="text" class="form-control ng-valid ng-dirty ng-valid-parse ng-touched"
+                                    placeholder="Tìm theo nội dung hoặc từ khóa">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-fit bordered">
+            <div class="portlet-body">
+                <!-- if data.length <= 0 -->
+                <div class="empty-data">
+                    <div class="portlet light text-center">
+                        <div class="none-infor custom-font-dark">
+                            "Bạn chưa có thông tin nào để hiển thị"
+                            <i class="fa fa-smile-o"></i>
+                        </div>
+                    </div>
+                </div>
+                <!--  if data.length > 0 -->
+                <div class="list-question"></div>
+            </div>
+        </div>
+    </div>
+</div>

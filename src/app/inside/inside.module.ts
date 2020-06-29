@@ -35,6 +35,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ManageModule } from '../manage/manage.module';
 import { SafePipe } from './course/pipe/safe.pipe';
+import { QuestionsComponent } from './questions/questions.component';
+import { CartsComponent } from './carts/carts.component';
 
 
 
@@ -58,6 +60,8 @@ import { SafePipe } from './course/pipe/safe.pipe';
     SafePipe,
     ScheduleComponent,
     CreateEditScheduleComponent,
+    QuestionsComponent, 
+    CartsComponent
   ],
   exports: [
     InsideComponent,
