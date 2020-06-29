@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CategoryComponent } from './category/category.component';
-import {CreateEditCategoryComponent} from './category/create-edit/create-edit.component';
-import {DetailCategoryComponent} from './category/detail/detail.component';
-import {CourseComponent} from './course/course.component';
-import {CreateEditCourseComponent} from './course/create-edit/create-edit.component';
-import {DetailCourseComponent} from './course/detail/detail.component';
-import {LessonComponent} from './lesson/lesson.component';
-import {CreateEditLessonComponent} from './lesson/create-edit/create-edit.component';
-import {DetailLessonComponent} from './lesson/detail/detail.component';
-import {CreateEditTeacherComponent} from './teacher/create-edit/create-edit.component';
-import {TeacherComponent} from './teacher/teacher.component';
-import {CreateEditSyllabusComponent} from './syllabus/create-edit/create-edit.component';
-import {WeekComponent} from './week/week.component';
-import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
-import {InsideComponent} from './inside.component';
+import { CreateEditCategoryComponent } from './category/create-edit/create-edit.component';
+import { DetailCategoryComponent } from './category/detail/detail.component';
+import { CourseComponent } from './course/course.component';
+import { CreateEditCourseComponent } from './course/create-edit/create-edit.component';
+import { DetailCourseComponent } from './course/detail/detail.component';
+import { LessonComponent } from './lesson/lesson.component';
+import { CreateEditLessonComponent } from './lesson/create-edit/create-edit.component';
+import { DetailLessonComponent } from './lesson/detail/detail.component';
+import { CreateEditTeacherComponent } from './teacher/create-edit/create-edit.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { CreateEditSyllabusComponent } from './syllabus/create-edit/create-edit.component';
+import { WeekComponent } from './week/week.component';
+import { CreateEditWeekComponent } from './week/create-edit/create-edit.component';
+import { InsideComponent } from './inside.component';
 
 import { QuestionsComponent } from './questions/questions.component';
 import { CartsComponent } from './carts/carts.component';
@@ -92,7 +92,7 @@ const routes: Routes = [
         path: 'carts',
         component: CartsComponent
       },
-
+      {
         path: 'schedule',
         component: ScheduleComponent
       },
