@@ -2037,16 +2037,18 @@ textarea.form-control {
 .btn {
   display: inline-block;
   font-weight: 400;
-  color: #212529;
+  /* color: #212529; */
+  color: white;
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   background-color: transparent;
   border: 1px solid transparent;
-  padding: 0.575rem 1.75rem;
+  /* padding: 0.575rem 1.75rem; */
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
@@ -8360,6 +8362,16 @@ a[data-toggle="collapse"] {
   letter-spacing: normal;
 }
 
+.input-schedule{
+  position: relative;
+  text-align: left;
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+}
+
 .purple-color {
   color: #fff;
   background: #5c6ac4;
@@ -8589,10 +8601,6 @@ a[data-toggle="collapse"] {
   border-left: 2px solid #5c6ac4 !important;
 }
 
-.border-left-orange{
-  border-left: 2px solid #5c6ac4 !important;
-}
-
 .section .sec-title .lec-ic{
   margin-left: 2px;
 }
@@ -8618,7 +8626,7 @@ a[data-toggle="collapse"] {
   width: 80%;
   font-weight: 600;
   overflow: hidden;
-  line-height: 30px;
+  /* line-height: 30px; */
 }
 
 

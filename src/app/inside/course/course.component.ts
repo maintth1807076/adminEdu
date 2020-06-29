@@ -47,6 +47,11 @@ export class CourseComponent implements OnInit {
         }
       })
   }
+
+  clickCourse(id){
+    window.location.href = '/manage/course/curriculum?courseId=' + id;
+  }
+
   filterByCategory(val) {
     if(val == 'all'){
       this.listDataCategories = this.permanentListDataCategories1;

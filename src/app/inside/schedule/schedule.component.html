@@ -1,0 +1,79 @@
+<div class="tables-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 ">
+                <div class="menu-course">
+                    <!-- <button>Tạo</button> -->
+                    <a [routerLink]="['/schedule/create-edit']" class="btn btn-circle btn-custom purple-color">Tạo lộ trình</a>
+                </div>
+                <div class="accordion table-data">
+                    <div class="card rounded-0">
+                        <div class="mb-2" style=" display: flex;
+                            align-items: center;">
+                            <div class="">
+                                <span> Tìm kiếm: </span>
+                            </div>
+                            <input style="padding: 5px; border: 1px solid; border-radius: 15px; margin: 10px;"
+                                placeholder="search" type="text" value="" (input)="search($event.target.value)"
+                                class="bg-0 b-0">
+                        </div>
+                        <div class="card-header">
+                            <h4 class="mb-0" data-toggle="collapse" data-target="#table-two" aria-expanded="true"
+                                aria-controls="table-two">
+                                Lộ trình học tập
+                                <i class="fa pull-right accordion__angle--animated" aria-hidden="true"></i>
+                            </h4>
+                        </div>
+                        <!-- <div id="table-two" class="collapse show table-responsive"> -->
+                            
+
+                            <div id="course-list">
+                                <div class="section">
+                                    
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-2" *ngFor="let item of listDataSchedules"
+                                        [routerLink]="['/schedule/create-edit']"
+                                        [queryParams]="{id: item.id, nane: nameDoc}">
+                                        <a class="course-list-item sp-section-sort-handle ui-sortable-handle">
+                                            <div class="course portlet light" context="contextCourse"
+                                                ng-right-click="showContextMenu(course)">
+
+                                                <div class="course-avatar" style="
+                                                     background-size: cover;">
+                                                    <img src="{{item.thumbnail}}" alt="">
+                                                </div>
+                                                <div class="course-info">
+                                                    <div class="course-name">
+                                                        {{item.name}}
+                                                    </div>
+                                                    <div class="course-sale">
+                                                        <div class="col-md-7 col-xs-6"
+                                                            style="padding:  0px;text-align: left;">
+                                                            <div ng-if="checkCurrency == 'VND'">0<sup>đ</sup></div>
+                                                            <div class="course-sale-info">Doanh thu</div>
+                                                        </div>
+                                                        <div class="col-md-5 col-xs-6"
+                                                            style="padding:  0px;text-align: right;">
+                                                            <div ng-bind="course.user_courses">0</div>
+                                                            <div class="course-sale-info">Đăng ký</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <pagination-controls maxSize="5" *ngIf="listDataSchedules.length > 10"
+                                style="text-align: right" [id]="id" (pageChange)="p = $event">
+                            </pagination-controls>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

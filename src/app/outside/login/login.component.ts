@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
 import {AuthService} from '../../core/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(public afs: AngularFirestore,
               public authService: AuthService,
               private router: Router,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private toastService: ToastrService) {
     this.createForm();
   }
 
@@ -36,18 +39,21 @@ export class LoginComponent implements OnInit {
         this.sttLoading = false;
         console.log(res.user.uid);
         this.afs.doc('users/' + res.user.uid).valueChanges().subscribe(data => {
+
           // if (data == undefined) {
           //   return window.location.reload()
           // }
           console.log(data);
           this.afs.firestore.enableNetwork();
-          window.localStorage.setItem('uid', res.user.uid)
+          window.localStorage.setItem('uid', res.user.uid);
+          this.setTimeLogin();
           this.router.navigate(['/category']);
-          this.sttLoading = false;
+          // this.sttLoading = false;
         })
       }, err => {
         this.sttLoading = false;
         this.errorMessage = err.message;
+        this.toastService.error(this.errorMessage, '', {timeOut: 5000})
       })
   }
 
@@ -55,9 +61,19 @@ export class LoginComponent implements OnInit {
     this.authService.doLogout()
       .then((res) => {
         this.afs.firestore.disableNetwork();
+        window.localStorage.removeItem('lastLogin');
+        window.localStorage.removeItem('timeExpired');
         // this.router.navigate(['/login']);
       }, (error) => {
         console.log("Logout error", error);
       });
   }
+
+  setTimeLogin() {
+    const d = new Date().getTime();
+    let timeExpired = moment(d).add(1, 'hours').toDate().getTime();
+    window.localStorage.setItem('lastLogin', d.toString());
+    window.localStorage.setItem('timeExpired', timeExpired.toString())
+  }
+
 }

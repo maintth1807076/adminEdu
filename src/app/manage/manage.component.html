@@ -30,10 +30,17 @@
                     <a routerLink='/course'><span class="fa fa-book"></span> Khóa học</a>
                 </li>
                 <li>
+                    <a routerLink='/schedule'><span class="fa fa-road"></span> Lộ trình học tập</a>
+                </li>
+                <!-- <li>
                     <a routerLink='/week'><span class="fa fa-book"></span> Tuần học</a>
                 </li>
                 <li>
                     <a routerLink='/lesson'><span class="fa fa-sticky-note"></span> Bài học</a>
+                </li> -->
+                
+                <li>
+                    <a (click)="logOut()" ><span class="fa fa-sign-out"></span> Đăng xuất</a>
                 </li>
 
                 <!-- <li>
@@ -78,6 +85,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" routerLink='/lesson'>Bài học</a>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>

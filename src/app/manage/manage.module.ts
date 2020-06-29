@@ -5,10 +5,11 @@ import { ManageRoutingModule } from './manage-routing.module';
 import { ManageComponent } from './manage.component';
 import { CourseComponent } from './course/course.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 
 @NgModule({
-  declarations: [ManageComponent, CourseComponent, CurriculumComponent],
+  declarations: [ManageComponent, CourseComponent, CurriculumComponent, ScheduleComponent],
   imports: [
     CommonModule,
     ManageRoutingModule

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../core/auth.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-inside',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   
 })
 export class InsideComponent implements OnInit {
-  constructor() { }
+  constructor(public afs: AngularFirestore,public authService : AuthService) { }
 
   ngOnInit(): void {
   }
@@ -26,5 +28,17 @@ export class InsideComponent implements OnInit {
       scriptElement.onload = resolve;
       document.body.appendChild(scriptElement);
     })
+  }
+
+  logOut() {
+    this.authService.doLogout()
+      .then((res) => {
+        this.afs.firestore.disableNetwork();
+        window.localStorage.removeItem('lastLogin');
+        window.localStorage.removeItem('timeExpired');
+        // this.router.navigate(['/login']);
+      }, (error) => {
+        console.log("Logout error", error);
+      });
   }
 }

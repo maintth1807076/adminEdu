@@ -4,6 +4,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class AuthService {
       firebase.auth()
         .signInWithPopup(provider)
         .then(res => {
+          
           resolve(res);
         }, err => {
           console.log(err);
@@ -35,6 +37,7 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
         .then(res => {
+          this.setTimeLogin();
           resolve(res);
         }, err => reject(err))
     })
@@ -52,5 +55,12 @@ export class AuthService {
         reject();
       }
     });
+  }
+
+  setTimeLogin() {
+    const d = new Date().getTime();
+    let timeExpired = moment(d).add(1, 'hours').toDate().getTime();
+    window.localStorage.setItem('lastLogin', d.toString());
+    window.localStorage.setItem('timeExpired', timeExpired.toString())
   }
 }

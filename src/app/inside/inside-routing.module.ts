@@ -15,8 +15,12 @@ import {CreateEditSyllabusComponent} from './syllabus/create-edit/create-edit.co
 import {WeekComponent} from './week/week.component';
 import {CreateEditWeekComponent} from './week/create-edit/create-edit.component';
 import {InsideComponent} from './inside.component';
+
 import { QuestionsComponent } from './questions/questions.component';
 import { CartsComponent } from './carts/carts.component';
+
+import { ScheduleComponent } from './schedule/schedule.component';
+import { CreateEditScheduleComponent } from './schedule/create-edit-schedule/create-edit-schedule.component';
 
 const routes: Routes = [
   {
@@ -80,6 +84,7 @@ const routes: Routes = [
         component: CreateEditSyllabusComponent
       },
       {
+
         path: 'questions',
         component: QuestionsComponent
       },
@@ -87,6 +92,15 @@ const routes: Routes = [
         path: 'carts',
         component: CartsComponent
       },
+
+        path: 'schedule',
+        component: ScheduleComponent
+      },
+      {
+        path: 'schedule/create-edit',
+        component: CreateEditScheduleComponent
+      }
+
     ]
   }
 ];

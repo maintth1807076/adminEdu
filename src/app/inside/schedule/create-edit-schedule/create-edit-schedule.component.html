@@ -1,0 +1,137 @@
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
+<div class="wrap-content row">
+    <div class="col-md-12">
+        <div class="col-lg-4">
+            <p>
+                <strong> Thông tin </strong><br><br>
+                Thêm thông tin về lộ trình
+            </p>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card login-card register-card">
+                <div class="card-body">
+                    <h2 class="card-title" *ngIf="sttAdd">Tạo lộ trình</h2>
+                    <h2 class="card-title" *ngIf="!sttAdd"></h2>
+                    <form [formGroup]="formCreated">
+                        <mat-form-field style="display: block;">
+                            <mat-label>Tên lộ trình</mat-label>
+                            <input matInput type="text" formControlName="name">
+                            <div *ngIf="formCreated.get('name').invalid && (formCreated.get('name').dirty || formCreated.get('name').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formCreated.get('name').errors.required">
+                                    Name is required.
+                                </div>
+                                <div *ngIf="formCreated.get('name').errors.minlength">
+                                    Name cannot be more than 30 characters long.
+                                </div>
+                                <div *ngIf="formCreated.get('name').errors.minlength">
+                                    Name must be at least 2 characters long.
+                                </div>
+                            </div>
+                        </mat-form-field>
+
+                        <mat-form-field style="display: block;">
+                            <mat-label>Mô tả ngắn gọn</mat-label>
+                            <input matInput type="text" formControlName="introduce">
+                            <div *ngIf="formCreated.get('introduce').invalid && (formCreated.get('introduce').dirty || formCreated.get('introduce').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formCreated.get('introduce').errors.required">
+                                    This field is required.
+                                </div>
+
+                                <div *ngIf="formCreated.get('introduce').errors.minlength">
+                                    This field must be at least 2 characters long.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                        <mat-form-field style="display: block;">
+                            <mat-label>Từ khóa tag</mat-label>
+                            <input matInput type="text" formControlName="tag">
+                            <div *ngIf="formCreated.get('tag').invalid && (formCreated.get('tag').dirty || formCreated.get('tag').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="formCreated.get('tag').errors.required">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </mat-form-field>
+
+                        <div class="row" style="margin-bottom: 5%;">
+
+                            <div class="input-schedule col-md-12">
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal"
+                                    data-target="#myModal">
+                                    Chọn ảnh đại diện
+                                </button>
+                            </div>
+                            <div class="col-md-12">
+                                <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true"
+                                    (removed)="onRemove(url)">
+                                    <ngx-dropzone-label>
+                                        <img width="100%" src="{{url}}" alt="">
+                                    </ngx-dropzone-label>
+                                </ngx-dropzone-preview>
+                            </div>
+
+                            <!-- The Modal -->
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog  modal-lg">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <ngx-dropzone (change)="onSelect($event)">
+                                                <!-- accept="image/*firebase deploy" -->
+                                                <ngx-dropzone-label>Chọn ảnh đại diện</ngx-dropzone-label>
+                                                <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true"
+                                                    (removed)="onRemove(url)">
+                                                    <!-- <ngx-dropzone-label> -->
+                                                    <img width="100%" src="{{url}}" alt="">
+                                                    <!-- </ngx-dropzone-label> -->
+                                                </ngx-dropzone-preview>
+                                            </ngx-dropzone>
+                                            <input [hidden] matInput type="text" formControlName="thumbnail">
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-info"
+                                                data-dismiss="modal">Save</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-schedule">
+                            <mat-label style="font-weight: 400;">Mô tả lộ trình</mat-label>
+                            <ckeditor formControlName="description">
+                                [(ngModel)]="ckeditorContent"
+                            </ckeditor>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <button (click)="createdSchedule()" type="submit" class="btn btn-success m-30 submit">Lưu
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
